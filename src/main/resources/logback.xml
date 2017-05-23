@@ -20,7 +20,7 @@
   xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback https://raw.githubusercontent.com/enricopulatzo/logback-XSD/master/src/main/xsd/logback.xsd">
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-      <layout class="org.safris.commons.test.SurefireTestLayout" />
+      <layout class="org.lib4j.test.SurefireTestLayout" />
     </encoder>
   </appender>
 

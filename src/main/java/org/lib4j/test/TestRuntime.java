@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.safris.commons.test;
+package org.lib4j.test;
 
 public final class TestRuntime {
   public static boolean isInIDE() {

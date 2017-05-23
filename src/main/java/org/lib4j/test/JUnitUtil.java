@@ -14,7 +14,20 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.safris.commons.test;
+package org.lib4j.test;
 
-public class MixedTest {
+public final class JUnitUtil {
+  public static String[] getExpectedActual(final AssertionError error) {
+    final String message = error.getMessage();
+    int start = message.indexOf('<');
+    int end = message.indexOf('>', start + 1);
+    final String expected = message.substring(start + 1, end);
+    start = message.indexOf('<', end + 1);
+    end = message.indexOf('>', start + 1);
+    final String actual = message.substring(start + 1, end);
+    return new String[] {expected, actual};
+  }
+
+  private JUnitUtil() {
+  }
 }
