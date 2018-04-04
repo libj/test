@@ -20,7 +20,9 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.LayoutBase;
 
 public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
-  private static final String TEST = "[1;35m[TEST][0;39m ";
+  private static final String RESET = "\033[0;39m";
+  private static final String TEST = "\033[0;33[TEST]" + RESET + " ";
+
   @Override
   public String doLayout(final ILoggingEvent event) {
     final String message = event.getFormattedMessage();
