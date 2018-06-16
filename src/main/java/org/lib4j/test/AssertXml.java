@@ -21,7 +21,6 @@ import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
-import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -29,6 +28,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.junit.Assert;
+import org.lib4j.xml.dom.DOMStyle;
 import org.lib4j.xml.dom.DOMs;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -47,17 +47,6 @@ public class AssertXml {
     final XPath xPath = XPathFactory.newInstance().newXPath();
     xPath.setNamespaceContext(new SimpleNamespaceContext(prefixToNamespaceURI));
     return xPath;
-  }
-
-  private String evalXPath(final Element element, final String xpath) throws XPathExpressionException {
-    final NodeList nodes = (NodeList)newXPath().evaluate(xpath, element, XPathConstants.NODESET);
-    final StringBuilder builder = new StringBuilder();
-    for (int i = 0; i < nodes.getLength(); ++i) {
-      final Node node = nodes.item(i);
-      builder.append('\n').append(DOMs.domToString(node));
-    }
-
-    return builder.length() == 0 ? null : builder.substring(1);
   }
 
   public static AssertXml compare(final Element controlElement, final Element testElement) {
@@ -148,8 +137,8 @@ public class AssertXml {
 
   public void assertEqual() {
     final String prefix = controlElement.getPrefix();
-    final String controlXml = DOMs.domToString(controlElement);
-    final String testXml = DOMs.domToString(testElement);
+    final String controlXml = DOMs.domToString(controlElement, DOMStyle.INDENT, DOMStyle.INDENT_ATTRS);
+    final String testXml = DOMs.domToString(testElement, DOMStyle.INDENT, DOMStyle.INDENT_ATTRS);
 
     final Source controlSource = Input.fromString(controlXml).build();
     final Source testSource = Input.fromString(testXml).build();
@@ -162,29 +151,11 @@ public class AssertXml {
         if (controlXPath == null || controlXPath.matches("^.*\\/@[:a-z]+$") || controlXPath.contains("text()"))
           return;
 
-        try {
-          final String controlEval = evalXPath(controlElement, controlXPath);
-
-          final String testXPath = comparison.getTestDetails().getXPath() == null ? null : comparison.getTestDetails().getXPath().replaceAll("/([^@])", "/" + prefix + ":$1");
-          final String testEval = testXPath == null ? null : evalXPath(testElement, testXPath);
-          Assert.assertEquals(testXPath + "\n\n" + controlEval + "\n\n" + controlXml, testXPath + "\n\n" + testEval + "\n\n" + testXml);
-        }
-        catch (final XPathExpressionException e) {
-          throw new RuntimeException(e);
-        }
-
+        Assert.assertEquals(controlXml, testXml);
         Assert.fail(comparison.toString());
       }
     });
 
-    try {
-      diffEngine.compare(controlSource, testSource);
-    }
-    catch (final RuntimeException e) {
-      if (e.getCause() instanceof TransformerException || e.getCause() instanceof XPathExpressionException)
-        throw new AssertionError(e.getCause());
-
-      throw e;
-    }
+    diffEngine.compare(controlSource, testSource);
   }
 }
