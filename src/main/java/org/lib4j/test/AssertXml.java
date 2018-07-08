@@ -28,6 +28,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.junit.Assert;
+import org.junit.ComparisonFailure;
 import org.lib4j.xml.dom.DOMStyle;
 import org.lib4j.xml.dom.DOMs;
 import org.w3c.dom.Attr;
@@ -151,7 +152,22 @@ public class AssertXml {
         if (controlXPath == null || controlXPath.matches("^.*\\/@[:a-z]+$") || controlXPath.contains("text()"))
           return;
 
-        Assert.assertEquals(controlXml, testXml);
+        try {
+          Assert.assertEquals(controlXml, testXml);
+        }
+        catch (final ComparisonFailure e) {
+          final StackTraceElement[] stackTrace = e.getStackTrace();
+          int i;
+          for (i = 3; i < stackTrace.length; i++)
+            if (!stackTrace[i].getClassName().startsWith("org.xmlunit.diff"))
+              break;
+
+          final StackTraceElement[] filtered = new StackTraceElement[stackTrace.length - ++i];
+          System.arraycopy(stackTrace, i, filtered, 0, stackTrace.length - i);
+          e.setStackTrace(filtered);
+          throw e;
+        }
+
         Assert.fail(comparison.toString());
       }
     });
