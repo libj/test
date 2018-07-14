@@ -51,7 +51,7 @@ public class AssertXml {
   }
 
   public static AssertXml compare(final Element controlElement, final Element testElement) {
-    final Map<String,String> prefixToNamespaceURI = new HashMap<String,String>();
+    final Map<String,String> prefixToNamespaceURI = new HashMap<>();
     prefixToNamespaceURI.put("xsi", "http://www.w3.org/2001/XMLSchema-instance");
     final NamedNodeMap attributes = controlElement.getAttributes();
     for (int i = 0; i < attributes.getLength(); i++) {

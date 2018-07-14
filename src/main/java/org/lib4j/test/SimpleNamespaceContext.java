@@ -23,8 +23,8 @@ import java.util.Map;
 import javax.xml.namespace.NamespaceContext;
 
 public class SimpleNamespaceContext implements NamespaceContext {
-  private final HashMap<String,String> prefixToNamespaceURI = new HashMap<String,String>();
-  private final HashMap<String,String> namespaceUriToPrefix = new HashMap<String,String>();
+  private final HashMap<String,String> prefixToNamespaceURI = new HashMap<>();
+  private final HashMap<String,String> namespaceUriToPrefix = new HashMap<>();
 
   public SimpleNamespaceContext(final Map<String,String> prefixToNamespaceURI) {
     this.prefixToNamespaceURI.putAll(prefixToNamespaceURI);
