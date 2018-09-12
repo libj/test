@@ -29,8 +29,8 @@ import javax.xml.xpath.XPathFactory;
 
 import org.junit.Assert;
 import org.junit.ComparisonFailure;
-import org.lib4j.xml.dom.DOMStyle;
-import org.lib4j.xml.dom.DOMs;
+import org.fastjax.xml.dom.DOMStyle;
+import org.fastjax.xml.dom.DOMs;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
