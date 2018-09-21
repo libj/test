@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.XMLConstants;
+import javax.xml.namespace.NamespaceContext;
 import javax.xml.transform.Source;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -27,10 +28,10 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.junit.Assert;
-import org.junit.ComparisonFailure;
 import org.fastjax.xml.dom.DOMStyle;
 import org.fastjax.xml.dom.DOMs;
+import org.junit.Assert;
+import org.junit.ComparisonFailure;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -43,40 +44,56 @@ import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.DOMDifferenceEngine;
 import org.xmlunit.diff.DifferenceEngine;
 
+/**
+ * A builder implementation of the test assertion pattern, designed to
+ * facilitate testing of XML values. This implementation is based on
+ * <a href="https://www.xmlunit.org/">XMLUnit</a> and
+ * <a href="https://www.junit.org/">JUnit</a>.
+ */
 public class AssertXml {
-  private XPath newXPath() {
-    final XPath xPath = XPathFactory.newInstance().newXPath();
-    xPath.setNamespaceContext(new SimpleNamespaceContext(prefixToNamespaceURI));
-    return xPath;
-  }
+  private static final String diffPackageName = Comparison.class.getPackage().getName();
 
-  public static AssertXml compare(final Element controlElement, final Element testElement) {
+  /**
+   * Create a new {@code AssertXml} comparison instance between the provided
+   * {@code control} and {@code test} elements.
+   *
+   * @param control The control element.
+   * @param test The test element.
+   * @return A new {@code AssertXml} comparison instance.
+   */
+  public static AssertXml compare(final Element control, final Element test) {
     final Map<String,String> prefixToNamespaceURI = new HashMap<>();
-    prefixToNamespaceURI.put("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-    final NamedNodeMap attributes = controlElement.getAttributes();
+    prefixToNamespaceURI.put("xsi", XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI);
+    final NamedNodeMap attributes = control.getAttributes();
     for (int i = 0; i < attributes.getLength(); i++) {
        final Attr attribute = (Attr)attributes.item(i);
        if (XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(attribute.getNamespaceURI()) && "xmlns".equals(attribute.getPrefix()))
          prefixToNamespaceURI.put(attribute.getLocalName(), attribute.getNodeValue());
     }
 
-    return new AssertXml(prefixToNamespaceURI, controlElement, testElement);
+    return new AssertXml(new SimpleNamespaceContext(prefixToNamespaceURI), control, test);
   }
 
-  private final Map<String,String> prefixToNamespaceURI;
-  private final Element controlElement;
-  private final Element testElement;
+  private final NamespaceContext namespaceContext;
+  private final Element control;
+  private final Element test;
 
-  private AssertXml(final Map<String,String> prefixToNamespaceURI, final Element controlElement, final Element testElement) {
-    if (!controlElement.getPrefix().equals(testElement.getPrefix()))
-      throw new IllegalArgumentException("Prefixes of control and test elements must be the same: " + controlElement.getPrefix() + " != " + testElement.getPrefix());
+  private AssertXml(final NamespaceContext namespaceContext, final Element control, final Element test) {
+    if (!control.getPrefix().equals(test.getPrefix()))
+      throw new IllegalArgumentException("Prefixes of control and test elements must be the same: \"" + control.getPrefix() + "\" != \"" + test.getPrefix() + "\"");
 
-    this.prefixToNamespaceURI = prefixToNamespaceURI;
-    this.controlElement = controlElement;
-    this.testElement = testElement;
+    this.namespaceContext = namespaceContext;
+    this.control = control;
+    this.test = test;
   }
 
-  public void addAttribute(final Element element, final String xpath, final String name, final String value) throws XPathExpressionException {
+  private XPath newXPath() {
+    final XPath xPath = XPathFactory.newInstance().newXPath();
+    xPath.setNamespaceContext(namespaceContext);
+    return xPath;
+  }
+
+  private AssertXml addAttr(final Element element, final String xpath, final String name, final String value) throws XPathExpressionException {
     final XPathExpression expression = newXPath().compile(xpath);
     final NodeList nodes = (NodeList)expression.evaluate(element, XPathConstants.NODESET);
     for (int i = 0; i < nodes.getLength(); ++i) {
@@ -89,9 +106,41 @@ public class AssertXml {
       final String namespaceURI = colon == -1 ? node.getNamespaceURI() : node.getOwnerDocument().lookupNamespaceURI(name.substring(0, colon));
       target.setAttributeNS(namespaceURI, name, value);
     }
+
+    return this;
   }
 
-  public void remove(final Element element, final String ... xpaths) throws XPathExpressionException {
+  /**
+   * Add an attribute to a target node of the {@code control} element in this
+   * {@code AssertXml} instance.
+   *
+   * @param xpath The XPath of the target node.
+   * @param name The name of the attribute.
+   * @param value The value of the attribute.
+   * @return This {@code AssertXml} instance.
+   * @throws XPathExpressionException If the {@code xpath} expression cannot be
+   *           compiled or evaluated.
+   */
+  public AssertXml addAttrToControl(final String xpath, final String name, final String value) throws XPathExpressionException {
+    return addAttr(control, xpath, name, value);
+  }
+
+  /**
+   * Add an attribute to a target node of the {@code test} element in this
+   * {@code AssertXml} instance.
+   *
+   * @param xpath The XPath of the target node.
+   * @param name The name of the attribute.
+   * @param value The value of the attribute.
+   * @return This {@code AssertXml} instance.
+   * @throws XPathExpressionException If the {@code xpath} expression cannot be
+   *           compiled or evaluated.
+   */
+  public AssertXml addAttrToTest(final String xpath, final String name, final String value) throws XPathExpressionException {
+    return addAttr(test, xpath, name, value);
+  }
+
+  private AssertXml remove(final Element element, final String ... xpaths) throws XPathExpressionException {
     for (final String xpath : xpaths) {
       final XPathExpression expression = newXPath().compile(xpath);
       final NodeList nodes = (NodeList)expression.evaluate(element, XPathConstants.NODESET);
@@ -106,9 +155,35 @@ public class AssertXml {
         }
       }
     }
+
+    return this;
   }
 
-  public void replace(final Element element, final String xpath, final String name, final String value) throws XPathExpressionException {
+  /**
+   * Remove nodes identified by the provided {@code xpaths} from the
+   * {@code control} element in this {@code AssertXml} instance.
+   *
+   * @param xpaths The XPaths of the target nodes to remove.
+   * @throws XPathExpressionException If an XPath expression cannot be compiled
+   *           or evaluated.
+   */
+  public AssertXml removeFromControl(final String ... xpaths) throws XPathExpressionException {
+    return remove(control, xpaths);
+  }
+
+  /**
+   * Remove nodes identified by the provided {@code xpaths} from the
+   * {@code test} element in this {@code AssertXml} instance.
+   *
+   * @param xpaths The XPaths of the target nodes to remove.
+   * @throws XPathExpressionException If an XPath expression cannot be compiled
+   *           or evaluated.
+   */
+  public AssertXml removeFromTest(final String ... xpaths) throws XPathExpressionException {
+    return remove(test, xpaths);
+  }
+
+  private AssertXml replaceAttr(final Element element, final String xpath, final String name, final String value) throws XPathExpressionException {
     final XPathExpression expression = newXPath().compile(xpath);
     final NodeList nodes = (NodeList)expression.evaluate(element, XPathConstants.NODESET);
     for (int i = 0; i < nodes.getLength(); ++i) {
@@ -130,16 +205,132 @@ public class AssertXml {
         throw new UnsupportedOperationException("Only support replacement of attribute values");
       }
     }
+
+    return this;
   }
 
-  public void replace(final Element element, final String xpath, final String value) throws XPathExpressionException {
-    replace(element, xpath, null, value);
+  /**
+   * Replace an attribute at {@code xpath} in the {@code control} element with
+   * the replacement {@code name} and {@code value}.
+   *
+   * @param xpath The XPath of the target attribute.
+   * @param name The name of the replacement attribute, or {@code null} to
+   *          retain the current name.
+   * @param value The value of the replacement attribute.
+   * @return This {@code AssertXml} instance.
+   * @throws XPathExpressionException If the {@code xpath} expression cannot be
+   *           compiled or evaluated.
+   */
+  public AssertXml replaceAttrInControl(final String xpath, final String name, final String value) throws XPathExpressionException {
+    return replaceAttr(control, xpath, name, value);
   }
 
+  /**
+   * Replace an attribute at {@code xpath} in the {@code test} element with
+   * the replacement {@code name} and {@code value}.
+   *
+   * @param xpath The XPath of the target attribute.
+   * @param name The name of the replacement attribute, or {@code null} to
+   *          retain the current name.
+   * @param value The value of the replacement attribute.
+   * @return This {@code AssertXml} instance.
+   * @throws XPathExpressionException If the {@code xpath} expression cannot be
+   *           compiled or evaluated.
+   */
+  public AssertXml replaceAttrInTest(final String xpath, final String name, final String value) throws XPathExpressionException {
+    return replaceAttr(test, xpath, name, value);
+  }
+
+  /**
+   * Replace an attribute at {@code xpath} in the {@code control} element with
+   * the replacement {@code value}.
+   *
+   * @param xpath The XPath of the target attribute.
+   * @param value The value of the replacement attribute.
+   * @return This {@code AssertXml} instance.
+   * @throws XPathExpressionException If the {@code xpath} expression cannot be
+   *           compiled or evaluated.
+   */
+  public AssertXml replaceAttrInControl(final String xpath, final String value) throws XPathExpressionException {
+    return replaceAttr(control, xpath, null, value);
+  }
+
+  /**
+   * Replace an attribute at {@code xpath} in the {@code test} element with
+   * the replacement {@code value}.
+   *
+   * @param xpath The XPath of the target attribute.
+   * @param value The value of the replacement attribute.
+   * @return This {@code AssertXml} instance.
+   * @throws XPathExpressionException If the {@code xpath} expression cannot be
+   *           compiled or evaluated.
+   */
+  public AssertXml replaceAttrInTest(final String xpath, final String value) throws XPathExpressionException {
+    return replaceAttr(test, xpath, null, value);
+  }
+
+  /**
+   * Assert equality of the {@code control} and {@code test} elements in this {@code AssertXml}
+   * instance. If they are not, a {@link ComparisonFailure}, without a message,
+   * and without its stack trace filtered, is thrown.
+   * <p>
+   * This method is equivalent to calling {@code assertEqual(false)}.
+   *
+   * @throws ComparisonFailure If the {@code control} and {@code test} elements in this
+   *           {@code AssertXml} instance are not equal.
+   */
   public void assertEqual() {
-    final String prefix = controlElement.getPrefix();
-    final String controlXml = DOMs.domToString(controlElement, DOMStyle.INDENT, DOMStyle.INDENT_ATTRS);
-    final String testXml = DOMs.domToString(testElement, DOMStyle.INDENT, DOMStyle.INDENT_ATTRS);
+    assertEqual(null, false);
+  }
+
+  /**
+   * Assert equality of the {@code control} and {@code test} elements in this {@code AssertXml}
+   * instance. If they are not, a {@link ComparisonFailure} is thrown with the
+   * given message, and without its stack trace filtered.
+   * <p>
+   * This method is equivalent to calling {@code assertEqual(message, false)}.
+   *
+   * @param message The identifying message for the {@link ComparisonFailure}
+   *          ({@code null} okay).
+   * @throws ComparisonFailure If the {@code control} and {@code test} elements in this
+   *           {@code AssertXml} instance are not equal.
+   */
+  public void assertEqual(final String message) {
+    assertEqual(message, false);
+  }
+
+  /**
+   * Assert equality of the {@code control} and {@code test} elements in this {@code AssertXml}
+   * instance. If they are not, a {@link ComparisonFailure} without a message is
+   * thrown.
+   *
+   * @param filterStacktrace If {@code true}, a {@code ComparisonFailure} will
+   *          have its "test framework internal" stack trace elements removed,
+   *          making the top stack trace element the test entrypoint.
+   * @throws ComparisonFailure If the {@code control} and {@code test} elements in this
+   *           {@code AssertXml} instance are not equal.
+   */
+  public void assertEqual(final boolean filterStacktrace) {
+    assertEqual(null, filterStacktrace);
+  }
+
+  /**
+   * Assert equality of the {@code control} and {@code test} elements in this {@code AssertXml}
+   * instance. If they are not, a {@link ComparisonFailure} is thrown with the
+   * given message.
+   *
+   * @param message The identifying message for the {@link ComparisonFailure}
+   *          ({@code null} okay).
+   * @param filterStacktrace If {@code true}, a {@code ComparisonFailure} will
+   *          have its "test framework internal" stack trace elements removed,
+   *          making the top stack trace element the test entrypoint.
+   * @throws ComparisonFailure If the {@code control} and {@code test} elements in this
+   *           {@code AssertXml} instance are not equal.
+   */
+  public void assertEqual(final String message, final boolean filterStacktrace) {
+    final String prefix = control.getPrefix();
+    final String controlXml = DOMs.domToString(control, DOMStyle.INDENT, DOMStyle.INDENT_ATTRS);
+    final String testXml = DOMs.domToString(test, DOMStyle.INDENT, DOMStyle.INDENT_ATTRS);
 
     final Source controlSource = Input.fromString(controlXml).build();
     final Source testSource = Input.fromString(testXml).build();
@@ -153,18 +344,21 @@ public class AssertXml {
           return;
 
         try {
-          Assert.assertEquals(controlXml, testXml);
+          Assert.assertEquals(message, controlXml, testXml);
         }
         catch (final ComparisonFailure e) {
-          final StackTraceElement[] stackTrace = e.getStackTrace();
-          int i;
-          for (i = 3; i < stackTrace.length; i++)
-            if (!stackTrace[i].getClassName().startsWith("org.xmlunit.diff"))
-              break;
+          if (filterStacktrace) {
+            final StackTraceElement[] stackTrace = e.getStackTrace();
+            int i = 3;
+            while (i < stackTrace.length)
+              if (!stackTrace[i++].getClassName().startsWith(diffPackageName))
+                break;
 
-          final StackTraceElement[] filtered = new StackTraceElement[stackTrace.length - ++i];
-          System.arraycopy(stackTrace, i, filtered, 0, stackTrace.length - i);
-          e.setStackTrace(filtered);
+            final StackTraceElement[] filtered = new StackTraceElement[stackTrace.length - ++i];
+            System.arraycopy(stackTrace, i, filtered, 0, stackTrace.length - i);
+            e.setStackTrace(filtered);
+          }
+
           throw e;
         }
 

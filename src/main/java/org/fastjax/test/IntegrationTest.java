@@ -16,5 +16,10 @@
 
 package org.fastjax.test;
 
+/**
+ * Marker class for JUnit Categories aspect.
+ *
+ * @see <a href="https://junit.org/junit4/javadoc/latest/org/junit/experimental/categories/Categories.html">JUnit Categories</a>
+ */
 public interface IntegrationTest {
 }
