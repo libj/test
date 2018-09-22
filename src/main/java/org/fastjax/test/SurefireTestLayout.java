@@ -21,11 +21,13 @@ import ch.qos.logback.core.LayoutBase;
 
 public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
   private static final String RESET = "\033[0;39m";
-  private static final String TEST = "\033[0;33[TEST]" + RESET + " ";
+  private static final String TEST = " [\033[0;36mTEST" + RESET + "] ";
+
+  private final boolean inSurefireTest = System.getProperty("sun.java.command").contains("surefire");
 
   @Override
   public String doLayout(final ILoggingEvent event) {
     final String message = event.getFormattedMessage();
-    return (System.getProperty("sun.java.command").contains("surefire") ? TEST + (message.contains("\n") ? message.replace("\n", "\n" + TEST) : message) : event.getFormattedMessage()) + "\n";
+    return (inSurefireTest ? TEST + (message.contains("\n") ? message.replace("\n", "\n" + TEST) : message) : event.getFormattedMessage()) + "\n";
   }
 }
