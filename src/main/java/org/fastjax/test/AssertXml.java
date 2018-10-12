@@ -66,9 +66,9 @@ public class AssertXml {
     prefixToNamespaceURI.put("xsi", XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI);
     final NamedNodeMap attributes = control.getAttributes();
     for (int i = 0; i < attributes.getLength(); i++) {
-       final Attr attribute = (Attr)attributes.item(i);
-       if (XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(attribute.getNamespaceURI()) && "xmlns".equals(attribute.getPrefix()))
-         prefixToNamespaceURI.put(attribute.getLocalName(), attribute.getNodeValue());
+      final Attr attribute = (Attr)attributes.item(i);
+      if (XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(attribute.getNamespaceURI()) && "xmlns".equals(attribute.getPrefix()))
+        prefixToNamespaceURI.put(attribute.getLocalName(), attribute.getNodeValue());
     }
 
     return new AssertXml(new SimpleNamespaceContext(prefixToNamespaceURI), control, test);
@@ -164,6 +164,7 @@ public class AssertXml {
    * {@code control} element in this {@code AssertXml} instance.
    *
    * @param xpaths The XPaths of the target nodes to remove.
+   * @return This {@code AssertXml} instance.
    * @throws XPathExpressionException If an XPath expression cannot be compiled
    *           or evaluated.
    */
@@ -176,6 +177,7 @@ public class AssertXml {
    * {@code test} element in this {@code AssertXml} instance.
    *
    * @param xpaths The XPaths of the target nodes to remove.
+   * @return This {@code AssertXml} instance.
    * @throws XPathExpressionException If an XPath expression cannot be compiled
    *           or evaluated.
    */
@@ -226,8 +228,8 @@ public class AssertXml {
   }
 
   /**
-   * Replace an attribute at {@code xpath} in the {@code test} element with
-   * the replacement {@code name} and {@code value}.
+   * Replace an attribute at {@code xpath} in the {@code test} element with the
+   * replacement {@code name} and {@code value}.
    *
    * @param xpath The XPath of the target attribute.
    * @param name The name of the replacement attribute, or {@code null} to
@@ -256,8 +258,8 @@ public class AssertXml {
   }
 
   /**
-   * Replace an attribute at {@code xpath} in the {@code test} element with
-   * the replacement {@code value}.
+   * Replace an attribute at {@code xpath} in the {@code test} element with the
+   * replacement {@code value}.
    *
    * @param xpath The XPath of the target attribute.
    * @param value The value of the replacement attribute.
@@ -270,62 +272,62 @@ public class AssertXml {
   }
 
   /**
-   * Assert equality of the {@code control} and {@code test} elements in this {@code AssertXml}
-   * instance. If they are not, a {@link ComparisonFailure}, without a message,
-   * and without its stack trace filtered, is thrown.
+   * Assert equality of the {@code control} and {@code test} elements in this
+   * {@code AssertXml} instance. If they are not, a {@link ComparisonFailure},
+   * without a message, and without its stack trace filtered, is thrown.
    * <p>
    * This method is equivalent to calling {@code assertEqual(false)}.
    *
-   * @throws ComparisonFailure If the {@code control} and {@code test} elements in this
-   *           {@code AssertXml} instance are not equal.
+   * @throws ComparisonFailure If the {@code control} and {@code test} elements
+   *           in this {@code AssertXml} instance are not equal.
    */
   public void assertEqual() {
     assertEqual(null, false);
   }
 
   /**
-   * Assert equality of the {@code control} and {@code test} elements in this {@code AssertXml}
-   * instance. If they are not, a {@link ComparisonFailure} is thrown with the
-   * given message, and without its stack trace filtered.
+   * Assert equality of the {@code control} and {@code test} elements in this
+   * {@code AssertXml} instance. If they are not, a {@link ComparisonFailure} is
+   * thrown with the given message, and without its stack trace filtered.
    * <p>
    * This method is equivalent to calling {@code assertEqual(message, false)}.
    *
    * @param message The identifying message for the {@link ComparisonFailure}
    *          ({@code null} okay).
-   * @throws ComparisonFailure If the {@code control} and {@code test} elements in this
-   *           {@code AssertXml} instance are not equal.
+   * @throws ComparisonFailure If the {@code control} and {@code test} elements
+   *           in this {@code AssertXml} instance are not equal.
    */
   public void assertEqual(final String message) {
     assertEqual(message, false);
   }
 
   /**
-   * Assert equality of the {@code control} and {@code test} elements in this {@code AssertXml}
-   * instance. If they are not, a {@link ComparisonFailure} without a message is
-   * thrown.
+   * Assert equality of the {@code control} and {@code test} elements in this
+   * {@code AssertXml} instance. If they are not, a {@link ComparisonFailure}
+   * without a message is thrown.
    *
    * @param filterStacktrace If {@code true}, a {@code ComparisonFailure} will
    *          have its "test framework internal" stack trace elements removed,
    *          making the top stack trace element the test entrypoint.
-   * @throws ComparisonFailure If the {@code control} and {@code test} elements in this
-   *           {@code AssertXml} instance are not equal.
+   * @throws ComparisonFailure If the {@code control} and {@code test} elements
+   *           in this {@code AssertXml} instance are not equal.
    */
   public void assertEqual(final boolean filterStacktrace) {
     assertEqual(null, filterStacktrace);
   }
 
   /**
-   * Assert equality of the {@code control} and {@code test} elements in this {@code AssertXml}
-   * instance. If they are not, a {@link ComparisonFailure} is thrown with the
-   * given message.
+   * Assert equality of the {@code control} and {@code test} elements in this
+   * {@code AssertXml} instance. If they are not, a {@link ComparisonFailure} is
+   * thrown with the given message.
    *
    * @param message The identifying message for the {@link ComparisonFailure}
    *          ({@code null} okay).
    * @param filterStacktrace If {@code true}, a {@code ComparisonFailure} will
    *          have its "test framework internal" stack trace elements removed,
    *          making the top stack trace element the test entrypoint.
-   * @throws ComparisonFailure If the {@code control} and {@code test} elements in this
-   *           {@code AssertXml} instance are not equal.
+   * @throws ComparisonFailure If the {@code control} and {@code test} elements
+   *           in this {@code AssertXml} instance are not equal.
    */
   public void assertEqual(final String message, final boolean filterStacktrace) {
     final String prefix = control.getPrefix();
