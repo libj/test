@@ -217,8 +217,8 @@ public class AssertXml {
    * the replacement {@code name} and {@code value}.
    *
    * @param xpath The XPath of the target attribute.
-   * @param name The name of the replacement attribute, or {@code null} to
-   *          retain the current name.
+   * @param name The name of the replacement attribute, or null to retain the
+   *          current name.
    * @param value The value of the replacement attribute.
    * @return This {@code AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
@@ -233,8 +233,8 @@ public class AssertXml {
    * replacement {@code name} and {@code value}.
    *
    * @param xpath The XPath of the target attribute.
-   * @param name The name of the replacement attribute, or {@code null} to
-   *          retain the current name.
+   * @param name The name of the replacement attribute, or null to retain the
+   *          current name.
    * @param value The value of the replacement attribute.
    * @return This {@code AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
@@ -294,7 +294,7 @@ public class AssertXml {
    * This method is equivalent to calling {@code assertEqual(message, false)}.
    *
    * @param message The identifying message for the {@link ComparisonFailure}
-   *          ({@code null} okay).
+   *          (null is okay).
    * @throws ComparisonFailure If the {@code control} and {@code test} elements
    *           in this {@code AssertXml} instance are not equal.
    */
@@ -323,7 +323,7 @@ public class AssertXml {
    * thrown with the given message.
    *
    * @param message The identifying message for the {@link ComparisonFailure}
-   *          ({@code null} okay).
+   *          (null is okay).
    * @param filterStacktrace If {@code true}, a {@code ComparisonFailure} will
    *          have its "test framework internal" stack trace elements removed,
    *          making the top stack trace element the test entrypoint.
