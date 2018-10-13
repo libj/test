@@ -16,6 +16,8 @@
 
 package org.fastjax.test;
 
+import static org.junit.Assert.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,6 @@ import javax.xml.xpath.XPathFactory;
 
 import org.fastjax.xml.dom.DOMStyle;
 import org.fastjax.xml.dom.DOMs;
-import org.junit.Assert;
 import org.junit.ComparisonFailure;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
@@ -346,7 +347,7 @@ public class AssertXml {
           return;
 
         try {
-          Assert.assertEquals(message, controlXml, testXml);
+          assertEquals(message, controlXml, testXml);
         }
         catch (final ComparisonFailure e) {
           if (filterStacktrace) {
@@ -364,7 +365,7 @@ public class AssertXml {
           throw e;
         }
 
-        Assert.fail(comparison.toString());
+        fail(comparison.toString());
       }
     });
 
