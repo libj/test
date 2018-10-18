@@ -17,6 +17,7 @@
 package org.fastjax.test;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,17 +30,17 @@ import javax.xml.namespace.NamespaceContext;
 public class SimpleNamespaceContext implements NamespaceContext, Serializable {
   private static final long serialVersionUID = 1865343491264296309L;
 
-  private final HashMap<String,String> prefixToNamespaceURI = new HashMap<>();
-  private final HashMap<String,String> namespaceUriToPrefix = new HashMap<>();
+  private final Map<String,String> prefixToNamespaceURI;
+  private final Map<String,String> namespaceUriToPrefix = new HashMap<>();
 
   /**
    * Create a new {@code SimpleNamespaceContext} with the provided
-   * {@code prefixToNamespaceURI} argument of prefix-to-namespaceURI mappings.
+   * {@code prefixToNamespaceURI} of prefix-to-namespaceURI mappings.
    *
    * @param prefixToNamespaceURI The map of prefix-to-namespaceURI mappings.
    */
   public SimpleNamespaceContext(final Map<String,String> prefixToNamespaceURI) {
-    this.prefixToNamespaceURI.putAll(prefixToNamespaceURI);
+    this.prefixToNamespaceURI = Collections.unmodifiableMap(prefixToNamespaceURI);
     for (final Map.Entry<String,String> entry : prefixToNamespaceURI.entrySet())
       namespaceUriToPrefix.put(entry.getKey(), entry.getValue());
   }
