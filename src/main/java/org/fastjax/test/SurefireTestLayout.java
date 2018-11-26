@@ -27,10 +27,9 @@ import ch.qos.logback.core.LayoutBase;
  * a test run by an IDE. In this case, the message is not altered (this has only
  * been tested in Eclipse).
  *
- * @see <a href="https://logback.qos.ch/manual/layouts.html">LogBack
- *      Layouts</a>.
+ * @see <a href="https://logback.qos.ch/manual/layouts.html">LogBack Layouts</a>
  * @see <a href="https://maven.apache.org/surefire/maven-surefire-plugin/">Maven
- *      Surefire Plugin</a>.
+ *      Surefire Plugin</a>
  */
 public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
   private static final String RESET = "\033[0;39m";
