@@ -16,7 +16,13 @@
 
 package org.fastjax.test;
 
+import java.util.Arrays;
+import java.util.List;
+
+import ch.qos.logback.classic.pattern.ThrowableProxyConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.classic.spi.IThrowableProxy;
+import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.LayoutBase;
 
 /**
@@ -35,11 +41,26 @@ public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
   private static final String RESET = "\033[0;39m";
   private static final String TEST = " [\033[0;36mTEST" + RESET + "] ";
 
-  private final boolean inSurefireTest = System.getProperty("sun.java.command").contains("surefire");
+  private static final boolean inSurefireTest = System.getProperty("sun.java.command").contains("surefire");
+  private static final ThrowableProxyConverter converter;
+
+  static {
+    converter = new ThrowableProxyConverter();
+    converter.setOptionList(Arrays.asList("full"));
+    converter.start();
+  }
 
   @Override
   public String doLayout(final ILoggingEvent event) {
     final String message = event.getFormattedMessage();
-    return (inSurefireTest ? TEST + (message.contains("\n") ? message.replace("\n", "\n" + TEST) : message) : event.getFormattedMessage()) + "\n";
+    final StringBuilder builder = new StringBuilder(inSurefireTest ? TEST + (message.contains("\n") ? message.replace("\n", "\n" + TEST) : message) : event.getFormattedMessage());
+    builder.append(CoreConstants.LINE_SEPARATOR);
+    final IThrowableProxy proxy = event.getThrowableProxy();
+    if (proxy != null) {
+      builder.append(converter.convert(event));
+      builder.append(CoreConstants.LINE_SEPARATOR);
+    }
+
+    return builder.toString();
   }
 }
