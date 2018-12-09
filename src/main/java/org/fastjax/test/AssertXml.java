@@ -16,11 +16,6 @@
 
 package org.fastjax.test;
 
-import static org.junit.Assert.*;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.transform.Source;
@@ -29,6 +24,10 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 import org.fastjax.xml.dom.DOMStyle;
 import org.fastjax.xml.dom.DOMs;
@@ -343,7 +342,7 @@ public class AssertXml {
       @Override
       public void comparisonPerformed(final Comparison comparison, final ComparisonResult result) {
         final String controlXPath = comparison.getControlDetails().getXPath() == null ? null : comparison.getControlDetails().getXPath().replaceAll("/([^@])", "/" + prefix + ":$1");
-        if (controlXPath == null || controlXPath.matches("^.*\\/@[:a-z]+$") || controlXPath.contains("text()"))
+        if (controlXPath == null || controlXPath.matches("^.*/@[:a-z]+$") || controlXPath.contains("text()"))
           return;
 
         try {
