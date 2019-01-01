@@ -1,4 +1,4 @@
-/* Copyright (c) 2016 FastJAX
+/* Copyright (c) 2016 OpenJAX
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,10 +14,9 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.fastjax.test;
+package org.openjax.classic.test;
 
 import java.util.Arrays;
-import java.util.List;
 
 import ch.qos.logback.classic.pattern.ThrowableProxyConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;

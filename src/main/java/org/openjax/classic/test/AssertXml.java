@@ -1,4 +1,4 @@
-/* Copyright (c) 2018 FastJAX
+/* Copyright (c) 2018 OpenJAX
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -14,7 +14,12 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.fastjax.test;
+package org.openjax.classic.test;
+
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
@@ -24,14 +29,10 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.util.HashMap;
-import java.util.Map;
 
-import static org.junit.Assert.*;
-
-import org.fastjax.xml.dom.DOMStyle;
-import org.fastjax.xml.dom.DOMs;
 import org.junit.ComparisonFailure;
+import org.openjax.classic.xml.dom.DOMStyle;
+import org.openjax.classic.xml.dom.DOMs;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
