@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.openjax.classic.test;
+package org.openjax.standard.test;
 
 import java.io.Serializable;
 import java.util.Collections;
