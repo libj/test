@@ -38,6 +38,7 @@ public class SimpleNamespaceContext implements NamespaceContext, Serializable {
    * {@code prefixToNamespaceURI} of prefix-to-namespaceURI mappings.
    *
    * @param prefixToNamespaceURI The map of prefix-to-namespaceURI mappings.
+   * @throws NullPointerException If {@code prefixToNamespaceURI} is null.
    */
   public SimpleNamespaceContext(final Map<String,String> prefixToNamespaceURI) {
     this.prefixToNamespaceURI = Collections.unmodifiableMap(prefixToNamespaceURI);
