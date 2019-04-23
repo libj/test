@@ -66,7 +66,7 @@ public class AssertXml {
     final Map<String,String> prefixToNamespaceURI = new HashMap<>();
     prefixToNamespaceURI.put("xsi", XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI);
     final NamedNodeMap attributes = control.getAttributes();
-    for (int i = 0; i < attributes.getLength(); i++) {
+    for (int i = 0; i < attributes.getLength(); ++i) {
       final Attr attribute = (Attr)attributes.item(i);
       if (XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(attribute.getNamespaceURI()) && "xmlns".equals(attribute.getPrefix()))
         prefixToNamespaceURI.put(attribute.getLocalName(), attribute.getNodeValue());
