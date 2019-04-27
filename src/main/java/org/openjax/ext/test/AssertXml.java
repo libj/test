@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.openjax.standard.test;
+package org.openjax.ext.test;
 
 import static org.junit.Assert.*;
 
@@ -31,8 +31,8 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.junit.ComparisonFailure;
-import org.openjax.standard.xml.dom.DOMStyle;
-import org.openjax.standard.xml.dom.DOMs;
+import org.openjax.ext.xml.dom.DOMStyle;
+import org.openjax.ext.xml.dom.DOMs;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;

@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.openjax.standard.test;
+package org.openjax.ext.test;
 
 import java.util.Arrays;
 
