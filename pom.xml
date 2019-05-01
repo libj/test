@@ -26,7 +26,10 @@
   </parent>
   <artifactId>test</artifactId>
   <version>0.6.9-SNAPSHOT</version>
-  <name>${project.groupId}:${project.artifactId}</name>
+  <name>OpenJAX Extensions Test</name>
+  <description>
+    A supplementary extension to JUnit patterns, providing common functions and abstractions related to unit testing.
+  </description>
   <dependencies>
     <dependency>
       <groupId>ch.qos.logback</groupId>
