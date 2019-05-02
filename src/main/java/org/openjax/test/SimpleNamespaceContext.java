@@ -14,7 +14,7 @@
  * program. If not, see <http://opensource.org/licenses/MIT/>.
  */
 
-package org.openjax.ext.test;
+package org.openjax.test;
 
 import java.io.Serializable;
 import java.util.ArrayList;
