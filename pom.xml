@@ -28,7 +28,7 @@
   <version>0.6.9-SNAPSHOT</version>
   <name>LibJ Test</name>
   <description>
-    A supplementary extension to JUnit patterns, providing common functions and abstractions related to unit testing.
+    Supplementary extension to JUnit patterns, providing common functions and abstractions related to unit testing.
   </description>
   <dependencies>
     <dependency>
