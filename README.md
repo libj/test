@@ -1,7 +1,5 @@
 # LibJ Test
 
-> Supplementary patterns for unit testing in general, and JUnit in specific.
-
 [![Build Status](https://travis-ci.org/libj/test.png)](https://travis-ci.org/libj/test)
 [![Coverage Status](https://coveralls.io/repos/github/libj/test/badge.svg?branch=master)](https://coveralls.io/github/libj/test?branch=master)
 [![Javadocs](https://www.javadoc.io/badge/org.libj/test.svg)](https://www.javadoc.io/doc/org.libj/test)
