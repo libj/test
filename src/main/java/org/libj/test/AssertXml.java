@@ -55,12 +55,12 @@ public class AssertXml {
   private static final String diffPackageName = Comparison.class.getPackage().getName();
 
   /**
-   * Create a new {@code AssertXml} comparison instance between the provided
+   * Create a new {@link AssertXml} comparison instance between the provided
    * {@code control} and {@code test} elements.
    *
    * @param control The control element.
    * @param test The test element.
-   * @return A new {@code AssertXml} comparison instance.
+   * @return A new {@link AssertXml} comparison instance.
    */
   public static AssertXml compare(final Element control, final Element test) {
     final Map<String,String> prefixToNamespaceURI = new HashMap<>();
@@ -113,12 +113,12 @@ public class AssertXml {
 
   /**
    * Add an attribute to a target node of the {@code control} element in this
-   * {@code AssertXml} instance.
+   * {@link AssertXml} instance.
    *
    * @param xpath The XPath of the target node.
    * @param name The name of the attribute.
    * @param value The value of the attribute.
-   * @return This {@code AssertXml} instance.
+   * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
    *           compiled or evaluated.
    */
@@ -128,12 +128,12 @@ public class AssertXml {
 
   /**
    * Add an attribute to a target node of the {@code test} element in this
-   * {@code AssertXml} instance.
+   * {@link AssertXml} instance.
    *
    * @param xpath The XPath of the target node.
    * @param name The name of the attribute.
    * @param value The value of the attribute.
-   * @return This {@code AssertXml} instance.
+   * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
    *           compiled or evaluated.
    */
@@ -162,10 +162,10 @@ public class AssertXml {
 
   /**
    * Remove nodes identified by the provided {@code xpaths} from the
-   * {@code control} element in this {@code AssertXml} instance.
+   * {@code control} element in this {@link AssertXml} instance.
    *
    * @param xpaths The XPaths of the target nodes to remove.
-   * @return This {@code AssertXml} instance.
+   * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If an XPath expression cannot be compiled
    *           or evaluated.
    */
@@ -175,10 +175,10 @@ public class AssertXml {
 
   /**
    * Remove nodes identified by the provided {@code xpaths} from the
-   * {@code test} element in this {@code AssertXml} instance.
+   * {@code test} element in this {@link AssertXml} instance.
    *
    * @param xpaths The XPaths of the target nodes to remove.
-   * @return This {@code AssertXml} instance.
+   * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If an XPath expression cannot be compiled
    *           or evaluated.
    */
@@ -220,7 +220,7 @@ public class AssertXml {
    * @param name The name of the replacement attribute, or null to retain the
    *          current name.
    * @param value The value of the replacement attribute.
-   * @return This {@code AssertXml} instance.
+   * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
    *           compiled or evaluated.
    */
@@ -236,7 +236,7 @@ public class AssertXml {
    * @param name The name of the replacement attribute, or null to retain the
    *          current name.
    * @param value The value of the replacement attribute.
-   * @return This {@code AssertXml} instance.
+   * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
    *           compiled or evaluated.
    */
@@ -250,7 +250,7 @@ public class AssertXml {
    *
    * @param xpath The XPath of the target attribute.
    * @param value The value of the replacement attribute.
-   * @return This {@code AssertXml} instance.
+   * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
    *           compiled or evaluated.
    */
@@ -264,7 +264,7 @@ public class AssertXml {
    *
    * @param xpath The XPath of the target attribute.
    * @param value The value of the replacement attribute.
-   * @return This {@code AssertXml} instance.
+   * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
    *           compiled or evaluated.
    */
@@ -274,13 +274,13 @@ public class AssertXml {
 
   /**
    * Assert equality of the {@code control} and {@code test} elements in this
-   * {@code AssertXml} instance. If they are not, a {@link ComparisonFailure},
+   * {@link AssertXml} instance. If they are not, a {@link ComparisonFailure},
    * without a message, and without its stack trace filtered, is thrown.
    * <p>
    * This method is equivalent to calling {@code assertEqual(false)}.
    *
    * @throws ComparisonFailure If the {@code control} and {@code test} elements
-   *           in this {@code AssertXml} instance are not equal.
+   *           in this {@link AssertXml} instance are not equal.
    */
   public void assertEqual() {
     assertEqual(null, false);
@@ -288,7 +288,7 @@ public class AssertXml {
 
   /**
    * Assert equality of the {@code control} and {@code test} elements in this
-   * {@code AssertXml} instance. If they are not, a {@link ComparisonFailure} is
+   * {@link AssertXml} instance. If they are not, a {@link ComparisonFailure} is
    * thrown with the given message, and without its stack trace filtered.
    * <p>
    * This method is equivalent to calling {@code assertEqual(message, false)}.
@@ -296,7 +296,7 @@ public class AssertXml {
    * @param message The identifying message for the {@link ComparisonFailure}
    *          (null is okay).
    * @throws ComparisonFailure If the {@code control} and {@code test} elements
-   *           in this {@code AssertXml} instance are not equal.
+   *           in this {@link AssertXml} instance are not equal.
    */
   public void assertEqual(final String message) {
     assertEqual(message, false);
@@ -304,14 +304,14 @@ public class AssertXml {
 
   /**
    * Assert equality of the {@code control} and {@code test} elements in this
-   * {@code AssertXml} instance. If they are not, a {@link ComparisonFailure}
+   * {@link AssertXml} instance. If they are not, a {@link ComparisonFailure}
    * without a message is thrown.
    *
-   * @param filterStacktrace If {@code true}, a {@code ComparisonFailure} will
+   * @param filterStacktrace If {@code true}, a {@link ComparisonFailure} will
    *          have its "test framework internal" stack trace elements removed,
    *          making the top stack trace element the test entrypoint.
    * @throws ComparisonFailure If the {@code control} and {@code test} elements
-   *           in this {@code AssertXml} instance are not equal.
+   *           in this {@link AssertXml} instance are not equal.
    */
   public void assertEqual(final boolean filterStacktrace) {
     assertEqual(null, filterStacktrace);
@@ -319,16 +319,16 @@ public class AssertXml {
 
   /**
    * Assert equality of the {@code control} and {@code test} elements in this
-   * {@code AssertXml} instance. If they are not, a {@link ComparisonFailure} is
+   * {@link AssertXml} instance. If they are not, a {@link ComparisonFailure} is
    * thrown with the given message.
    *
    * @param message The identifying message for the {@link ComparisonFailure}
    *          (null is okay).
-   * @param filterStacktrace If {@code true}, a {@code ComparisonFailure} will
+   * @param filterStacktrace If {@code true}, a {@link ComparisonFailure} will
    *          have its "test framework internal" stack trace elements removed,
    *          making the top stack trace element the test entrypoint.
    * @throws ComparisonFailure If the {@code control} and {@code test} elements
-   *           in this {@code AssertXml} instance are not equal.
+   *           in this {@link AssertXml} instance are not equal.
    */
   public void assertEqual(final String message, final boolean filterStacktrace) {
     final String prefix = control.getPrefix();
