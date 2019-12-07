@@ -217,8 +217,8 @@ public class AssertXml {
    * the replacement {@code name} and {@code value}.
    *
    * @param xpath The XPath of the target attribute.
-   * @param name The name of the replacement attribute, or null to retain the
-   *          current name.
+   * @param name The name of the replacement attribute, or {@code null} to
+   *          retain the current name.
    * @param value The value of the replacement attribute.
    * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
@@ -233,8 +233,8 @@ public class AssertXml {
    * replacement {@code name} and {@code value}.
    *
    * @param xpath The XPath of the target attribute.
-   * @param name The name of the replacement attribute, or null to retain the
-   *          current name.
+   * @param name The name of the replacement attribute, or {@code null} to
+   *          retain the current name.
    * @param value The value of the replacement attribute.
    * @return This {@link AssertXml} instance.
    * @throws XPathExpressionException If the {@code xpath} expression cannot be
