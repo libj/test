@@ -18,7 +18,7 @@ package org.libj.test;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,8 +33,8 @@ import javax.xml.namespace.NamespaceContext;
 public class SimpleNamespaceContext implements NamespaceContext, Serializable {
   private static final long serialVersionUID = 1865343491264296309L;
 
-  private static final List<String> xmlns = Arrays.asList("xmlns");
-  private static final List<String> xml = Arrays.asList("xml");
+  private static final List<String> xmlns = Collections.singletonList("xmlns");
+  private static final List<String> xml = Collections.singletonList("xml");
 
   private final Map<String,String> prefixToNamespaceURI;
   private final Map<String,List<String>> namespaceUriToPrefix = new HashMap<>();

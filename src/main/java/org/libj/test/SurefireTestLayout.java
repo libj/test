@@ -16,7 +16,7 @@
 
 package org.libj.test;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import ch.qos.logback.classic.pattern.ThrowableProxyConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -45,7 +45,7 @@ public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
 
   static {
     converter = new ThrowableProxyConverter();
-    converter.setOptionList(Arrays.asList("full"));
+    converter.setOptionList(Collections.singletonList("full"));
     converter.start();
   }
 

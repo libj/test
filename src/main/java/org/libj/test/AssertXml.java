@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
@@ -51,8 +52,10 @@ import org.xmlunit.diff.DifferenceEngine;
  * <a href="https://www.xmlunit.org/">XMLUnit</a> and
  * <a href="https://www.junit.org/">JUnit</a>.
  */
-public class AssertXml {
+public final class AssertXml {
   private static final String diffPackageName = Comparison.class.getPackage().getName();
+  private static final Pattern ATTR_NAME_PATTERN = Pattern.compile("/([^@])");
+  private static final Pattern ATTR_MATCH_PATTERN = Pattern.compile("^.*/@[:a-z]+$");
 
   /**
    * Create a new {@link AssertXml} comparison instance between the provided
@@ -342,8 +345,8 @@ public class AssertXml {
     diffEngine.addDifferenceListener(new ComparisonListener() {
       @Override
       public void comparisonPerformed(final Comparison comparison, final ComparisonResult result) {
-        final String controlXPath = comparison.getControlDetails().getXPath() == null ? null : comparison.getControlDetails().getXPath().replaceAll("/([^@])", "/" + prefix + ":$1");
-        if (controlXPath == null || controlXPath.matches("^.*/@[:a-z]+$") || controlXPath.contains("text()"))
+        final String controlXPath = comparison.getControlDetails().getXPath() == null ? null : ATTR_NAME_PATTERN.matcher(comparison.getControlDetails().getXPath()).replaceAll("/" + prefix + ":$1");
+        if (controlXPath == null || ATTR_MATCH_PATTERN.matcher(controlXPath).matches() || controlXPath.contains("text()"))
           return;
 
         try {
