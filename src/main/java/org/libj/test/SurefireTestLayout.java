@@ -20,7 +20,6 @@ import java.util.Collections;
 
 import ch.qos.logback.classic.pattern.ThrowableProxyConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import ch.qos.logback.classic.spi.IThrowableProxy;
 import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.LayoutBase;
 
@@ -40,7 +39,7 @@ public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
   private static final String RESET = "\033[0;39m";
   private static final String TEST = " [\033[0;36mTEST" + RESET + "] ";
 
-  private static final boolean inSurefireTest = System.getProperty("sun.java.command").contains("surefire");
+  private static final boolean inSurefireTest = System.getProperty("sun.java.command").contains("org.apache.maven.surefire");
   private static final ThrowableProxyConverter converter;
 
   static {
@@ -54,8 +53,7 @@ public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
     final String message = event.getFormattedMessage();
     final StringBuilder builder = new StringBuilder(inSurefireTest ? TEST + (message.contains("\n") ? message.replace("\n", "\n" + TEST) : message) : event.getFormattedMessage());
     builder.append(CoreConstants.LINE_SEPARATOR);
-    final IThrowableProxy proxy = event.getThrowableProxy();
-    if (proxy != null) {
+    if (event.getThrowableProxy() != null) {
       builder.append(converter.convert(event));
       builder.append(CoreConstants.LINE_SEPARATOR);
     }
