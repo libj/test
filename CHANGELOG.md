@@ -1,6 +1,8 @@
 # Changes by Version
 
-## [v0.7.1](https://github.com/libj/test/compare/67de14cd34530afc26edb6f80fee7bf2ac7bf6cd..HEAD) (2020-05-23)
+## [v0.7.2-SNAPSHOT](https://github.com/libj/test/compare/142df65e9d55eee3815cb977af8ad6bdb8901c94..HEAD)
+
+## [v0.7.1](https://github.com/libj/test/compare/67de14cd34530afc26edb6f80fee7bf2ac7bf6cd..142df65e9d55eee3815cb977af8ad6bdb8901c94) (2020-05-23)
 * Improve `inSurefireTest` condition in `SurefireTestLayout`.
 * Improve javadocs.
 
