@@ -39,7 +39,6 @@ public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
   private static final String RESET = "\033[0;39m";
   private static final String TEST = " [\033[0;36mTEST" + RESET + "] ";
 
-  private static final boolean inSurefireTest = System.getProperty("sun.java.command").contains("org.apache.maven.surefire");
   private static final ThrowableProxyConverter converter;
 
   static {
@@ -51,7 +50,7 @@ public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
   @Override
   public String doLayout(final ILoggingEvent event) {
     final String message = event.getFormattedMessage();
-    final StringBuilder builder = new StringBuilder(inSurefireTest ? TEST + (message.contains("\n") ? message.replace("\n", "\n" + TEST) : message) : event.getFormattedMessage());
+    final StringBuilder builder = new StringBuilder(TestAide.isInSurefireTest() ? TEST + (message.contains("\n") ? message.replace("\n", "\n" + TEST) : message) : event.getFormattedMessage());
     builder.append(CoreConstants.LINE_SEPARATOR);
     if (event.getThrowableProxy() != null) {
       builder.append(converter.convert(event));
