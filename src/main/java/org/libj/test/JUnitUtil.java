@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * Helpful utility functions for JUnit tests.
  */
 public class JUnitUtil {
-  private static final URL[] emptyResources = new URL[0];
+  private static final URL[] emptyResources = {};
 
   private static URL[] getResources(final String path, final Pattern pattern, final ClassLoader classLoader, final BufferedReader reader, final int depth) throws IOException {
     final String fileName = reader.readLine();
