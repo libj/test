@@ -67,7 +67,8 @@ public final class TestAide {
    * Prints the runtime parameters for the current VM.
    *
    * @param ps The {@link PrintStream} to which the results are to be printed.
-   * @throws NullPointerException If {@code ps} is null.
+   * @throws NullPointerException If here are parameters to print and {@code ps}
+   *           is null.
    */
   public static void printRuntimeParameters(final PrintStream ps) {
     final RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();

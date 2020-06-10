@@ -33,13 +33,6 @@ public class TestAideTest {
 
   @Test
   public void testPrintRuntimeParameters() {
-    try {
-      TestAide.printRuntimeParameters(null);
-      fail("Expected NullPointerException");
-    }
-    catch (final NullPointerException e) {
-    }
-
     TestAide.printRuntimeParameters(System.err);
   }
 }
