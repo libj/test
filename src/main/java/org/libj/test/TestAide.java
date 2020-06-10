@@ -16,7 +16,10 @@
 
 package org.libj.test;
 
+import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.util.List;
 
 /**
  * Helpful utility functions for test executions.
@@ -36,7 +39,7 @@ public final class TestAide {
     if (inSurefireTestInited)
       return inSurefireTest;
 
-    inSurefireTest = System.getProperty("sun.java.command").contains("org.apache.maven.surefire");
+    inSurefireTest = System.getProperty("sun.java.command").contains("org.apache.maven.surefire") || System.getProperty("surefire.test.class.path") != null;
     inSurefireTestInited = true;
     return inSurefireTest;
   }
@@ -58,6 +61,19 @@ public final class TestAide {
     inDebug = ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
     inDebugInited = true;
     return inDebug;
+  }
+
+  /**
+   * Prints the runtime parameters for the current VM.
+   *
+   * @param ps The {@link PrintStream} to which the results are to be printed.
+   * @throws NullPointerException If {@code ps} is null.
+   */
+  public static void printRuntimeParameters(final PrintStream ps) {
+    final RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
+    final List<String> arguments = bean.getInputArguments();
+    for (final String argument : arguments)
+      ps.println(argument);
   }
 
   private TestAide() {
