@@ -19,7 +19,10 @@ package org.libj.test;
 import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
+import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Helpful utility functions for test executions.
@@ -75,6 +78,55 @@ public final class TestAide {
     final List<String> arguments = bean.getInputArguments();
     for (final String argument : arguments)
       ps.println(argument);
+  }
+
+  /**
+   * Prints the provided {@link Throwable} and its backtrace to the specified
+   * {@link PrintStream}.
+   * <p>
+   * This method differentiates itself from
+   * {@link Throwable#printStackTrace(PrintStream)} by terminating the printout
+   * of the backtrace at the first occurrence (if any) of a stack trace element
+   * representing {@code "runReflectiveCall"} of a class in the
+   * {@code "org.junit.runners"} package.
+   *
+   * @param out The {@code PrintStream} to use for output.
+   * @param t The {@link Throwable} to print.
+   */
+  public static void printStackTrace(final PrintStream out, final Throwable t) {
+    // Guard against malicious overrides of Throwable.equals by
+    // using a Set with identity equality semantics.
+    printStackTrace(out, t, Collections.newSetFromMap(new IdentityHashMap<>()));
+  }
+
+  private static void printStackTrace(final PrintStream out, final Throwable t, final Set<Throwable> visited) {
+    synchronized (t) {
+      if (visited.add(t)) {
+        // Print our stack trace
+        out.println(t.toString());
+        final StackTraceElement[] stackTraceElements = t.getStackTrace();
+        for (final StackTraceElement stackTraceElement : stackTraceElements) {
+          if ("runReflectiveCall".equals(stackTraceElement.getMethodName()) && stackTraceElement.getClassName().startsWith("org.junit.runners."))
+            break;
+
+          t.printStackTrace();
+          out.println("\tat " + stackTraceElement);
+        }
+
+        // Print suppressed exceptions, if any
+        for (final Throwable suppressed : t.getSuppressed()) {
+          out.print("\nSuppressed: ");
+          printStackTrace(out, suppressed, visited);
+        }
+
+        // Print cause, if any
+        final Throwable cause = t.getCause();
+        if (cause != null) {
+          out.print("Caused by: ");
+          printStackTrace(out, t, visited);
+        }
+      }
+    }
   }
 
   private TestAide() {
