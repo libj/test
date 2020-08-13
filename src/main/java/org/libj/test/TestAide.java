@@ -109,7 +109,6 @@ public final class TestAide {
           if ("runReflectiveCall".equals(stackTraceElement.getMethodName()) && stackTraceElement.getClassName().startsWith("org.junit.runners."))
             break;
 
-          t.printStackTrace();
           out.println("\tat " + stackTraceElement);
         }
 
