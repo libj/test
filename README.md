@@ -1,9 +1,9 @@
 # LibJ Test
 
-[![Build Status](https://travis-ci.org/libj/test.svg?1)](https://travis-ci.org/libj/test)
+[![Build Status](https://travis-ci.org/libj/test.svg?branch=master)](https://travis-ci.org/libj/test)
 [![Coverage Status](https://coveralls.io/repos/github/libj/test/badge.svg?branch=master)](https://coveralls.io/github/libj/test?branch=master)
-[![Javadocs](https://www.javadoc.io/badge/org.libj/test.svg?1)](https://www.javadoc.io/doc/org.libj/test)
-[![Released Version](https://img.shields.io/maven-central/v/org.libj/test.svg?1)](https://mvnrepository.com/artifact/org.libj/test)
+[![Javadocs](https://www.javadoc.io/badge/org.libj/test.svg)](https://www.javadoc.io/doc/org.libj/test)
+[![Released Version](https://img.shields.io/maven-central/v/org.libj/test.svg)](https://mvnrepository.com/artifact/org.libj/test)
 ![Snapshot Version](https://img.shields.io/nexus/s/org.libj/test?label=maven-snapshot&server=https%3A%2F%2Foss.sonatype.org)
 
 ## Introduction
