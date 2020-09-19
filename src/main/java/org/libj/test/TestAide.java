@@ -47,6 +47,27 @@ public final class TestAide {
     return inSurefireTest;
   }
 
+  private static boolean inCiTestInited;
+  private static boolean inCiTest;
+
+  /**
+   * Returns {@code true} if the current runtime is executed in a Continuous
+   * Integration Environment of Travis CI, Circle CI, or GitHub Actions.
+   *
+   * @return {@code true} if the current runtime is executed in a Continuous
+   *         Integration Environment of Travis CI, Circle CI or GitHub Actions,
+   *         otherwise {@code false}.
+   */
+  public static boolean isInCiTest() {
+    if (inCiTestInited)
+      return inCiTest;
+
+    final String property = System.getenv("CI");
+    inCiTest = property != null && !"false".equals(property);
+    inCiTestInited = true;
+    return inCiTestInited;
+  }
+
   private static boolean inDebugInited;
   private static boolean inDebug;
 
