@@ -1,6 +1,6 @@
 # LibJ Test
 
-[![Build Status](https://github.com/libj/test/workflows/build.yml/badge.svg)](https://github.com/libj/test/actions/workflows/build.yml)
+[![Build Status](https://github.com/libj/test/actions/workflows/build.yml/badge.svg)](https://github.com/libj/test/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/libj/test/badge.svg?branch=master)](https://coveralls.io/github/libj/test?branch=master)
 [![Javadocs](https://www.javadoc.io/badge/org.libj/test.svg)](https://www.javadoc.io/doc/org.libj/test)
 [![Released Version](https://img.shields.io/maven-central/v/org.libj/test.svg)](https://mvnrepository.com/artifact/org.libj/test)
