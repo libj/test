@@ -18,10 +18,8 @@ package org.libj.test;
 
 import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
 import java.util.Collections;
 import java.util.IdentityHashMap;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -91,13 +89,13 @@ public final class TestAide {
    * Prints the runtime parameters for the current VM.
    *
    * @param ps The {@link PrintStream} to which the results are to be printed.
-   * @throws NullPointerException If here are parameters to print and {@code ps}
-   *           is null.
+   * @throws IllegalArgumentException If {@code ps} is null.
    */
   public static void printRuntimeParameters(final PrintStream ps) {
-    final RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
-    final List<String> arguments = bean.getInputArguments();
-    for (final String argument : arguments)
+    if (ps == null)
+      throw new IllegalArgumentException("ps == null");
+
+    for (final String argument : ManagementFactory.getRuntimeMXBean().getInputArguments())
       ps.println(argument);
   }
 
