@@ -69,7 +69,7 @@ public final class AssertXml {
     final Map<String,String> prefixToNamespaceURI = new HashMap<>();
     prefixToNamespaceURI.put("xsi", XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI);
     final NamedNodeMap attributes = control.getAttributes();
-    for (int i = 0; i < attributes.getLength(); ++i) {
+    for (int i = 0, len = attributes.getLength(); i < len; ++i) {
       final Attr attribute = (Attr)attributes.item(i);
       if (XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(attribute.getNamespaceURI()) && "xmlns".equals(attribute.getPrefix()))
         prefixToNamespaceURI.put(attribute.getLocalName(), attribute.getNodeValue());
@@ -100,7 +100,7 @@ public final class AssertXml {
   private AssertXml addAttr(final Element element, final String xpath, final String name, final String value) throws XPathExpressionException {
     final XPathExpression expression = newXPath().compile(xpath);
     final NodeList nodes = (NodeList)expression.evaluate(element, XPathConstants.NODESET);
-    for (int i = 0; i < nodes.getLength(); ++i) {
+    for (int i = 0, len = nodes.getLength(); i < len; ++i) {
       final Node node = nodes.item(i);
       if (!(node instanceof Element))
         throw new UnsupportedOperationException("Only support addition of attributes to elements");
@@ -148,7 +148,7 @@ public final class AssertXml {
     for (final String xpath : xpaths) {
       final XPathExpression expression = newXPath().compile(xpath);
       final NodeList nodes = (NodeList)expression.evaluate(element, XPathConstants.NODESET);
-      for (int i = 0; i < nodes.getLength(); ++i) {
+      for (int i = 0, len = nodes.getLength(); i < len; ++i) {
         final Node node = nodes.item(i);
         if (node instanceof Attr) {
           final Attr attribute = (Attr)node;
@@ -192,7 +192,7 @@ public final class AssertXml {
   private AssertXml replaceAttr(final Element element, final String xpath, final String name, final String value) throws XPathExpressionException {
     final XPathExpression expression = newXPath().compile(xpath);
     final NodeList nodes = (NodeList)expression.evaluate(element, XPathConstants.NODESET);
-    for (int i = 0; i < nodes.getLength(); ++i) {
+    for (int i = 0, len = nodes.getLength(); i < len; ++i) {
       final Node node = nodes.item(i);
       if (node instanceof Attr) {
         final Attr attribute = (Attr)node;
