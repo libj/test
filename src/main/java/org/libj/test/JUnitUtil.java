@@ -17,10 +17,13 @@
 package org.libj.test;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 /**
@@ -107,6 +110,26 @@ public class JUnitUtil {
    */
   public static URL[] getResources(final String path) throws IOException {
     return getResources(path, null, ClassLoader.getSystemClassLoader());
+  }
+
+  /**
+   * Sorts the provided array of file {@link URL}s by the their byte size,
+   * ascending.
+   *
+   * @param resources The file {@link URL}s to sort.
+   * @return The provided array of file {@link URL}s, sorted by the their byte
+   *         size, ascending.
+   */
+  public static URL[] sortBySize(final URL ... resources) {
+    Arrays.sort(resources, (final URL o1, final URL o2) -> {
+      try {
+        return Long.compare(new File(o1.toURI()).length(), new File(o2.toURI()).length());
+      }
+      catch (final URISyntaxException e) {
+        throw new RuntimeException(e);
+      }
+    });
+    return resources;
   }
 
   private JUnitUtil() {
