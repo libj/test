@@ -31,8 +31,6 @@ import javax.xml.namespace.NamespaceContext;
  * Immutable class implementation of {@link NamespaceContext}.
  */
 public class SimpleNamespaceContext implements NamespaceContext, Serializable {
-  private static final long serialVersionUID = 1865343491264296309L;
-
   private static final List<String> xmlns = Collections.singletonList("xmlns");
   private static final List<String> xml = Collections.singletonList("xml");
 
