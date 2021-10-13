@@ -63,7 +63,7 @@ public final class TestAide {
     final String property = System.getenv("CI");
     inCiTest = property != null && !"false".equals(property);
     inCiTestInited = true;
-    return inCiTestInited;
+    return inCiTest;
   }
 
   private static boolean inDebugInited;
