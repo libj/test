@@ -16,7 +16,9 @@
 
 package org.libj.test;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.UncheckedIOException;
 import java.lang.management.ManagementFactory;
 import java.util.Collections;
 import java.util.IdentityHashMap;
@@ -77,12 +79,24 @@ public final class TestAide {
    *         otherwise {@code false}.
    */
   public static boolean isInDebug() {
-    if (inDebugInited)
-      return inDebug;
+    if (!inDebugInited) {
+      inDebug = ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
+      inDebugInited = true;
+    }
 
-    inDebug = ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
-    inDebugInited = true;
-    return inDebug;
+    if (!inDebug)
+      return false;
+
+    try {
+      System.out.flush();
+      System.err.flush();
+      System.err.println(">> TestAide.isInDebug() = true");
+      System.in.read();
+      return inDebug;
+    }
+    catch (final IOException e) {
+      throw new UncheckedIOException(e);
+    }
   }
 
   /**
