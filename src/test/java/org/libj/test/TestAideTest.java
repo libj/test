@@ -28,7 +28,7 @@ public class TestAideTest {
 
   @Test
   public void testIsInDebug() {
-    assertFalse(TestAide.isInDebug());
+    assertFalse(TestAide.isInDebug(true));
   }
 
   @Test

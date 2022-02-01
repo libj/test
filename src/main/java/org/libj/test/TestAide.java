@@ -32,11 +32,9 @@ public final class TestAide {
   private static boolean inSurefireTest;
 
   /**
-   * Returns {@code true} if the current runtime is executed in a Maven SureFire
-   * plugin, otherwise {@code false}.
+   * Returns {@code true} if the current runtime is executed in a Maven SureFire plugin, otherwise {@code false}.
    *
-   * @return {@code true} if the current runtime is executed in a Maven SureFire
-   *         plugin, otherwise {@code false}.
+   * @return {@code true} if the current runtime is executed in a Maven SureFire plugin, otherwise {@code false}.
    */
   public static boolean isInSurefireTest() {
     if (inSurefireTestInited)
@@ -51,12 +49,11 @@ public final class TestAide {
   private static boolean inCiTest;
 
   /**
-   * Returns {@code true} if the current runtime is executed in a Continuous
-   * Integration Environment of Travis CI, Circle CI, or GitHub Actions.
+   * Returns {@code true} if the current runtime is executed in a Continuous Integration Environment of Travis CI, Circle CI, or
+   * GitHub Actions.
    *
-   * @return {@code true} if the current runtime is executed in a Continuous
-   *         Integration Environment of Travis CI, Circle CI or GitHub Actions,
-   *         otherwise {@code false}.
+   * @return {@code true} if the current runtime is executed in a Continuous Integration Environment of Travis CI, Circle CI or
+   *         GitHub Actions, otherwise {@code false}.
    */
   public static boolean isInCiTest() {
     if (inCiTestInited)
@@ -72,31 +69,40 @@ public final class TestAide {
   private static boolean inDebug;
 
   /**
-   * Returns {@code true} if the current runtime is executed in debug mode,
-   * otherwise {@code false}.
+   * Returns {@code true} if the current runtime is executed in debug mode, otherwise {@code false}.
    *
-   * @return {@code true} if the current runtime is executed in debug mode,
-   *         otherwise {@code false}.
+   * @param waitSysIn If {@code true} and execution is in "debug", this method will wait user input to cue continued execution via
+   *          {@link java.io.InputStream#read() System.in.read()}.
+   * @return {@code true} if the current runtime is executed in debug mode, otherwise {@code false}.
    */
-  public static boolean isInDebug() {
+  public static boolean isInDebug(final boolean waitSysIn) {
     if (!inDebugInited) {
       inDebug = ManagementFactory.getRuntimeMXBean().getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
       inDebugInited = true;
     }
 
-    if (!inDebug)
-      return false;
+    if (!inDebug || !waitSysIn)
+      return inDebug;
 
     try {
       System.out.flush();
       System.err.flush();
-      System.err.println(">> TestAide.isInDebug() = true");
+      System.err.println(">> TestAide.isInDebug(true) = true");
       System.in.read();
       return inDebug;
     }
     catch (final IOException e) {
       throw new UncheckedIOException(e);
     }
+  }
+
+  /**
+   * Returns {@code true} if the current runtime is executed in debug mode, otherwise {@code false}.
+   *
+   * @return {@code true} if the current runtime is executed in debug mode, otherwise {@code false}.
+   */
+  public static boolean isInDebug() {
+    return isInDebug(false);
   }
 
   /**
@@ -114,13 +120,10 @@ public final class TestAide {
   }
 
   /**
-   * Prints the provided {@link Throwable} and its backtrace to the specified
-   * {@link PrintStream}.
+   * Prints the provided {@link Throwable} and its backtrace to the specified {@link PrintStream}.
    * <p>
-   * This method differentiates itself from
-   * {@link Throwable#printStackTrace(PrintStream)} by terminating the printout
-   * of the backtrace at the first occurrence (if any) of a stack trace element
-   * representing {@code "runReflectiveCall"} of a class in the
+   * This method differentiates itself from {@link Throwable#printStackTrace(PrintStream)} by terminating the printout of the
+   * backtrace at the first occurrence (if any) of a stack trace element representing {@code "runReflectiveCall"} of a class in the
    * {@code "org.junit.runners"} package.
    *
    * @param out The {@code PrintStream} to use for output.
