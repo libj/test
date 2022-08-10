@@ -38,8 +38,7 @@ public class SimpleNamespaceContext implements NamespaceContext, Serializable {
   private final Map<String,List<String>> namespaceUriToPrefix = new HashMap<>();
 
   /**
-   * Create a new {@link SimpleNamespaceContext} with the provided
-   * {@code prefixToNamespaceURI} of prefix-to-namespaceURI mappings.
+   * Create a new {@link SimpleNamespaceContext} with the provided {@code prefixToNamespaceURI} of prefix-to-namespaceURI mappings.
    *
    * @param prefixToNamespaceURI The map of prefix-to-namespaceURI mappings.
    * @throws IllegalArgumentException If {@code prefixToNamespaceURI} is null.
@@ -49,7 +48,7 @@ public class SimpleNamespaceContext implements NamespaceContext, Serializable {
       throw new IllegalArgumentException("prefixToNamespaceURI == null");
 
     this.prefixToNamespaceURI = prefixToNamespaceURI;
-    for (final Map.Entry<String,String> entry : prefixToNamespaceURI.entrySet()) {
+    for (final Map.Entry<String,String> entry : prefixToNamespaceURI.entrySet()) { // [S]
       List<String> prefixes = namespaceUriToPrefix.get(entry.getValue());
       if (prefixes == null)
         namespaceUriToPrefix.put(entry.getValue(), prefixes = new ArrayList<>());

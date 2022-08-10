@@ -24,16 +24,13 @@ import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.LayoutBase;
 
 /**
- * A LogBack Layout intended to be used for the maven-surefire-plugin that
- * modifies the output of log messages by prepending a yellow-colored "[TEST] "
- * prefix to each log entry. The implementation of this layout takes
- * consideration of the possibility that the layout may be modifying output from
- * a test run by an IDE. In this case, the message is not altered (this has only
- * been tested in Eclipse).
+ * A LogBack Layout intended to be used for the maven-surefire-plugin that modifies the output of log messages by prepending a
+ * yellow-colored "[TEST] " prefix to each log entry. The implementation of this layout takes consideration of the possibility that
+ * the layout may be modifying output from a test run by an IDE. In this case, the message is not altered (this has only been tested
+ * in Eclipse).
  *
  * @see <a href="https://logback.qos.ch/manual/layouts.html">LogBack Layouts</a>
- * @see <a href="https://maven.apache.org/surefire/maven-surefire-plugin/">Maven
- *      Surefire Plugin</a>
+ * @see <a href="https://maven.apache.org/surefire/maven-surefire-plugin/">Maven Surefire Plugin</a>
  */
 public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
   private static final String RESET = "\033[0;39m";

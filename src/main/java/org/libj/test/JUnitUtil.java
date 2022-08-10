@@ -47,14 +47,12 @@ public class JUnitUtil {
   }
 
   /**
-   * Finds the resources prefixed by the given {@code path} in the specified
-   * {@link ClassLoader}.
+   * Finds the resources prefixed by the given {@code path} in the specified {@link ClassLoader}.
    *
    * @param path The path prefix of the resources to find.
    * @param regex The regular expression pattern to match resource names.
    * @param classLoader The {@link ClassLoader} in which to find the resources.
-   * @return The resources prefixed by the given {@code path} in the specified
-   *         {@link ClassLoader}.
+   * @return The resources prefixed by the given {@code path} in the specified {@link ClassLoader}.
    * @throws IOException If an I/O error has occurred.
    * @throws IllegalArgumentException If {@code path} is null.
    */
@@ -72,13 +70,11 @@ public class JUnitUtil {
   }
 
   /**
-   * Finds the resources prefixed by the given {@code path} in the specified
-   * {@link ClassLoader}.
+   * Finds the resources prefixed by the given {@code path} in the specified {@link ClassLoader}.
    *
    * @param path The path prefix of the resources to find.
    * @param classLoader The {@link ClassLoader} in which to find the resources.
-   * @return The resources prefixed by the given {@code path} in the specified
-   *         {@link ClassLoader}.
+   * @return The resources prefixed by the given {@code path} in the specified {@link ClassLoader}.
    * @throws IOException If an I/O error has occurred.
    */
   public static URL[] getResources(final String path, final ClassLoader classLoader) throws IOException {
@@ -86,13 +82,11 @@ public class JUnitUtil {
   }
 
   /**
-   * Finds the resources prefixed by the given {@code path} in the system class
-   * loader.
+   * Finds the resources prefixed by the given {@code path} in the system class loader.
    *
    * @param path The path prefix of the resources to find.
    * @param regex The regular expression pattern to match resource names.
-   * @return The resources prefixed by the given {@code path} in the system
-   *         class loader.
+   * @return The resources prefixed by the given {@code path} in the system class loader.
    * @throws IOException If an I/O error has occurred.
    */
   public static URL[] getResources(final String path, final String regex) throws IOException {
@@ -100,12 +94,10 @@ public class JUnitUtil {
   }
 
   /**
-   * Finds the resources prefixed by the given {@code path} in the system class
-   * loader.
+   * Finds the resources prefixed by the given {@code path} in the system class loader.
    *
    * @param path The path prefix of the resources to find.
-   * @return The resources prefixed by the given {@code path} in the system
-   *         class loader.
+   * @return The resources prefixed by the given {@code path} in the system class loader.
    * @throws IOException If an I/O error has occurred.
    */
   public static URL[] getResources(final String path) throws IOException {
@@ -113,12 +105,10 @@ public class JUnitUtil {
   }
 
   /**
-   * Sorts the provided array of file {@link URL}s by the their byte size,
-   * ascending.
+   * Sorts the provided array of file {@link URL}s by the their byte size, ascending.
    *
    * @param resources The file {@link URL}s to sort.
-   * @return The provided array of file {@link URL}s, sorted by the their byte
-   *         size, ascending.
+   * @return The provided array of file {@link URL}s, sorted by the their byte size, ascending.
    */
   public static URL[] sortBySize(final URL ... resources) {
     Arrays.sort(resources, (final URL o1, final URL o2) -> {

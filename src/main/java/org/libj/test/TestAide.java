@@ -115,7 +115,7 @@ public final class TestAide {
     if (ps == null)
       throw new IllegalArgumentException("ps == null");
 
-    for (final String argument : ManagementFactory.getRuntimeMXBean().getInputArguments())
+    for (final String argument : ManagementFactory.getRuntimeMXBean().getInputArguments()) // [L]
       ps.println(argument);
   }
 
@@ -141,7 +141,7 @@ public final class TestAide {
         // Print our stack trace
         out.println(t.toString());
         final StackTraceElement[] stackTraceElements = t.getStackTrace();
-        for (final StackTraceElement stackTraceElement : stackTraceElements) {
+        for (final StackTraceElement stackTraceElement : stackTraceElements) { // [A]
           if ("runReflectiveCall".equals(stackTraceElement.getMethodName()) && stackTraceElement.getClassName().startsWith("org.junit.runners."))
             break;
 
@@ -149,7 +149,7 @@ public final class TestAide {
         }
 
         // Print suppressed exceptions, if any
-        for (final Throwable suppressed : t.getSuppressed()) {
+        for (final Throwable suppressed : t.getSuppressed()) { // [A]
           out.print("\nSuppressed: ");
           printStackTrace(out, suppressed, visited);
         }
