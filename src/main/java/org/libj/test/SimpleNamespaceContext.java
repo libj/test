@@ -48,12 +48,14 @@ public class SimpleNamespaceContext implements NamespaceContext, Serializable {
       throw new IllegalArgumentException("prefixToNamespaceURI == null");
 
     this.prefixToNamespaceURI = prefixToNamespaceURI;
-    for (final Map.Entry<String,String> entry : prefixToNamespaceURI.entrySet()) { // [S]
-      List<String> prefixes = namespaceUriToPrefix.get(entry.getValue());
-      if (prefixes == null)
-        namespaceUriToPrefix.put(entry.getValue(), prefixes = new ArrayList<>());
+    if (prefixToNamespaceURI.size() > 0) {
+      for (final Map.Entry<String,String> entry : prefixToNamespaceURI.entrySet()) { // [S]
+        List<String> prefixes = namespaceUriToPrefix.get(entry.getValue());
+        if (prefixes == null)
+          namespaceUriToPrefix.put(entry.getValue(), prefixes = new ArrayList<>());
 
-      prefixes.add(entry.getKey());
+        prefixes.add(entry.getKey());
+      }
     }
   }
 

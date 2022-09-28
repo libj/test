@@ -22,6 +22,8 @@ import java.io.UncheckedIOException;
 import java.lang.management.ManagementFactory;
 import java.util.Collections;
 import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.RandomAccess;
 import java.util.Set;
 
 /**
@@ -115,8 +117,16 @@ public final class TestAide {
     if (ps == null)
       throw new IllegalArgumentException("ps == null");
 
-    for (final String argument : ManagementFactory.getRuntimeMXBean().getInputArguments()) // [L]
-      ps.println(argument);
+    final List<String> arguments = ManagementFactory.getRuntimeMXBean().getInputArguments();
+    final int i$ = arguments.size();
+    if (i$ > 0) {
+      if (arguments instanceof RandomAccess)
+        for (int i = 0; i < i$; ++i) // [RA]
+          ps.println(arguments.get(i));
+      else
+        for (final String argument : arguments) // [L]
+          ps.println(argument);
+    }
   }
 
   /**
