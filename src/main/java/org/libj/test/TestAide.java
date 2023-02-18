@@ -22,6 +22,7 @@ import java.io.UncheckedIOException;
 import java.lang.management.ManagementFactory;
 import java.util.Collections;
 import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.RandomAccess;
 import java.util.Set;
@@ -120,12 +121,16 @@ public final class TestAide {
     final List<String> arguments = ManagementFactory.getRuntimeMXBean().getInputArguments();
     final int i$ = arguments.size();
     if (i$ > 0) {
-      if (arguments instanceof RandomAccess)
-        for (int i = 0; i < i$; ++i) // [RA]
+      if (arguments instanceof RandomAccess) {
+        int i = 0; do // [RA]
           ps.println(arguments.get(i));
-      else
-        for (final String argument : arguments) // [L]
-          ps.println(argument);
+        while (++i < i$);
+      }
+      else {
+        final Iterator<String> i = arguments.iterator(); do // [I]
+          ps.println(i.next());
+        while (i.hasNext());
+      }
     }
   }
 
