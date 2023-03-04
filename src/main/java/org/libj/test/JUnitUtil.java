@@ -54,12 +54,9 @@ public class JUnitUtil {
    * @param classLoader The {@link ClassLoader} in which to find the resources.
    * @return The resources prefixed by the given {@code path} in the specified {@link ClassLoader}.
    * @throws IOException If an I/O error has occurred.
-   * @throws IllegalArgumentException If {@code path} is null.
+   * @throws NullPointerException If {@code path} is null.
    */
   public static URL[] getResources(final String path, final String regex, final ClassLoader classLoader) throws IOException {
-    if (path == null)
-      throw new IllegalArgumentException("path == null");
-
     final InputStream in = classLoader.getResourceAsStream(path);
     if (in == null)
       return emptyResources;

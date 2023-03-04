@@ -31,9 +31,9 @@ public class SimpleNamespaceContextTest {
   public void test() {
     try {
       new SimpleNamespaceContext(null);
-      fail("Expected IllegalArgumentException");
+      fail("Expected NullPointerException");
     }
-    catch (final IllegalArgumentException e) {
+    catch (final NullPointerException e) {
     }
 
     try {

@@ -27,9 +27,9 @@ public class JUnitUtilTest {
   public void test() throws IOException {
     try {
       assertEquals(0, JUnitUtil.getResources(null).length);
-      fail("Expected IllegalArgumentException");
+      fail("Expected NullPointerException");
     }
-    catch (final IllegalArgumentException e) {
+    catch (final NullPointerException e) {
     }
     assertEquals(0, JUnitUtil.getResources("/").length);
     assertEquals(1, JUnitUtil.getResources("").length);
