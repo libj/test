@@ -19,7 +19,6 @@ package org.libj.test;
 import static org.junit.Assert.*;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.xml.XMLConstants;
@@ -63,7 +62,7 @@ public final class AssertXml {
    * @return A new {@link AssertXml} comparison instance.
    */
   public static AssertXml compare(final Element control, final Element test) {
-    final Map<String,String> prefixToNamespaceURI = new HashMap<>();
+    final HashMap<String,String> prefixToNamespaceURI = new HashMap<>();
     prefixToNamespaceURI.put("xsi", XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI);
     final NamedNodeMap attributes = control.getAttributes();
     for (int i = 0, i$ = attributes.getLength(); i < i$; ++i) { // [RA]
@@ -312,8 +311,12 @@ public final class AssertXml {
     diffEngine.addDifferenceListener(new ComparisonListener() {
       @Override
       public void comparisonPerformed(final Comparison comparison, final ComparisonResult result) {
-        final String controlXPath = comparison.getControlDetails().getXPath() == null ? null : ATTR_NAME_PATTERN.matcher(comparison.getControlDetails().getXPath()).replaceAll("/" + prefix + ":$1");
-        if (controlXPath == null || ATTR_MATCH_PATTERN.matcher(controlXPath).matches() || controlXPath.contains("text()"))
+        final String xPath = comparison.getControlDetails().getXPath();
+        if (xPath == null)
+          return;
+
+        final String controlXPath = ATTR_NAME_PATTERN.matcher(xPath).replaceAll("/" + prefix + ":$1");
+        if (ATTR_MATCH_PATTERN.matcher(controlXPath).matches() || controlXPath.contains("text()"))
           return;
 
         try {
@@ -327,8 +330,9 @@ public final class AssertXml {
               if (!stackTrace[i++].getClassName().startsWith(diffPackageName))
                 break;
 
-            final StackTraceElement[] filtered = new StackTraceElement[stackTrace.length - ++i];
-            System.arraycopy(stackTrace, i, filtered, 0, stackTrace.length - i);
+            final int length = stackTrace.length - ++i;
+            final StackTraceElement[] filtered = new StackTraceElement[length];
+            System.arraycopy(stackTrace, i, filtered, 0, length);
             e.setStackTrace(filtered);
           }
 
