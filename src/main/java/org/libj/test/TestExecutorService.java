@@ -180,7 +180,7 @@ public class TestExecutorService implements ExecutorService {
   @Override
   public boolean awaitTermination(final long timeout, final TimeUnit unit) throws InterruptedException {
     final boolean result = target.awaitTermination(timeout, unit);
-    for (final Thread thread : threads) {
+    for (final Thread thread : threads) { // [RA]
       if (thread != null) {
         final Throwable t = exception.get(thread);
         if (t != null) {
