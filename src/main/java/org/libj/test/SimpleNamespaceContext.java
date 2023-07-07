@@ -64,7 +64,7 @@ public class SimpleNamespaceContext implements NamespaceContext, Serializable {
   @Override
   public String getPrefix(final String uri) {
     if (uri == null)
-      throw new IllegalArgumentException("uri == null");
+      throw new IllegalArgumentException("uri is null");
 
     if (XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(uri))
       return "xmlns";
@@ -79,7 +79,7 @@ public class SimpleNamespaceContext implements NamespaceContext, Serializable {
   @Override
   public Iterator<String> getPrefixes(final String uri) {
     if (uri == null)
-      throw new IllegalArgumentException("uri == null");
+      throw new IllegalArgumentException("uri is null");
 
     if (XMLConstants.XMLNS_ATTRIBUTE_NS_URI.equals(uri))
       return xmlns.iterator();
