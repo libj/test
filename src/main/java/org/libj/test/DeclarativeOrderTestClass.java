@@ -49,8 +49,12 @@ public class DeclarativeOrderTestClass extends TestClass {
       for (int i = 0, i$ = frameworkMethods.size(); i < i$; ++i) // [RA]
         methods[i] = frameworkMethods.get(i).getMethod();
 
-      if (!Classes.sortDeclarativeOrder(methods))
-        throw new IllegalStateException("Javassist is not present on the system classpath, or line number information is unavailable in the bytecode");
+      try {
+        Classes.sortDeclarativeOrder(methods, true);
+      }
+      catch (final ClassNotFoundException e) {
+        throw new IllegalStateException("Javassist is not present on the system classpath", e);
+      }
 
       for (final Method method : methods) // [A]
         addToAnnotationLists(new FrameworkMethod(method), methodsForAnnotations);
