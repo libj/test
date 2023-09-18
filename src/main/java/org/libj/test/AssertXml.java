@@ -55,7 +55,7 @@ public final class AssertXml {
   private static final Pattern ATTR_MATCH_PATTERN = Pattern.compile("^.*/@[:a-z]+$");
 
   /**
-   * Create a new {@link AssertXml} comparison instance between the provided {@code control} and {@code test} elements.
+   * Creates a new {@link AssertXml} comparison instance between the provided {@code control} and {@code test} elements.
    *
    * @param control The control element.
    * @param test The test element.

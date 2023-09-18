@@ -38,7 +38,7 @@ public class SimpleNamespaceContext implements NamespaceContext, Serializable {
   private final Map<String,List<String>> namespaceUriToPrefix = new HashMap<>();
 
   /**
-   * Create a new {@link SimpleNamespaceContext} with the provided {@code prefixToNamespaceURI} of prefix-to-namespaceURI mappings.
+   * Creates a new {@link SimpleNamespaceContext} with the provided {@code prefixToNamespaceURI} of prefix-to-namespaceURI mappings.
    *
    * @param prefixToNamespaceURI The map of prefix-to-namespaceURI mappings.
    * @throws NullPointerException If {@code prefixToNamespaceURI} is null.
