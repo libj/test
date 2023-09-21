@@ -22,10 +22,10 @@
   <parent>
     <groupId>org.libj</groupId>
     <artifactId>libj</artifactId>
-    <version>0.9.8</version>
+    <version>0.9.9-SNAPSHOT</version>
   </parent>
   <artifactId>test</artifactId>
-  <version>0.7.2</version>
+  <version>0.7.3-SNAPSHOT</version>
   <name>LibJ Test</name>
   <description>
     Supplementary extension to JUnit patterns, providing common functions and abstractions related to unit testing.
@@ -34,7 +34,7 @@
     <dependency>
       <groupId>org.libj</groupId>
       <artifactId>lang</artifactId>
-      <version>0.8.0</version>
+      <version>0.8.1-SNAPSHOT</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
@@ -47,7 +47,7 @@
     <dependency>
       <groupId>org.openjax.xml</groupId>
       <artifactId>dom</artifactId>
-      <version>0.9.5</version>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
