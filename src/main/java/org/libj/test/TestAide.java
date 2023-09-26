@@ -55,8 +55,8 @@ public final class TestAide {
    * Returns {@code true} if the current runtime is executed in a Continuous Integration Environment of Travis CI, Circle CI, or
    * GitHub Actions.
    *
-   * @return {@code true} if the current runtime is executed in a Continuous Integration Environment of Travis CI, Circle CI or
-   *         GitHub Actions, otherwise {@code false}.
+   * @return {@code true} if the current runtime is executed in a Continuous Integration Environment of Travis CI, Circle CI or GitHub
+   *         Actions, otherwise {@code false}.
    */
   public static boolean isInCiTest() {
     if (inCiTestInited)
@@ -119,12 +119,14 @@ public final class TestAide {
     final int i$ = arguments.size();
     if (i$ > 0) {
       if (arguments instanceof RandomAccess) {
-        int i = 0; do // [RA]
+        int i = 0;
+        do // [RA]
           ps.println(arguments.get(i));
         while (++i < i$);
       }
       else {
-        final Iterator<String> i = arguments.iterator(); do // [I]
+        final Iterator<String> i = arguments.iterator();
+        do // [I]
           ps.println(i.next());
         while (i.hasNext());
       }

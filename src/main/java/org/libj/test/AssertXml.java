@@ -282,8 +282,8 @@ public final class AssertXml {
    * Assert equality of the {@code control} and {@code test} elements in this {@link AssertXml} instance. If they are not, a
    * {@link ComparisonFailure} without a message is thrown.
    *
-   * @param filterStacktrace If {@code true}, a {@link ComparisonFailure} will have its "test framework internal" stack trace
-   *          elements removed, making the top stack trace element the test entrypoint.
+   * @param filterStacktrace If {@code true}, a {@link ComparisonFailure} will have its "test framework internal" stack trace elements
+   *          removed, making the top stack trace element the test entrypoint.
    * @throws ComparisonFailure If the {@code control} and {@code test} elements in this {@link AssertXml} instance are not equal.
    */
   public void assertEqual(final boolean filterStacktrace) {
@@ -295,8 +295,8 @@ public final class AssertXml {
    * {@link ComparisonFailure} is thrown with the given message.
    *
    * @param message The identifying message for the {@link ComparisonFailure} (null is okay).
-   * @param filterStacktrace If {@code true}, a {@link ComparisonFailure} will have its "test framework internal" stack trace
-   *          elements removed, making the top stack trace element the test entrypoint.
+   * @param filterStacktrace If {@code true}, a {@link ComparisonFailure} will have its "test framework internal" stack trace elements
+   *          removed, making the top stack trace element the test entrypoint.
    * @throws ComparisonFailure If the {@code control} and {@code test} elements in this {@link AssertXml} instance are not equal.
    */
   public void assertEqual(final String message, final boolean filterStacktrace) {

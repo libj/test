@@ -50,6 +50,7 @@ public class TestExecutorService implements ExecutorService {
 
   /**
    * Creates a new {@link TestExecutorService} with the provided target {@link ExecutorService}.
+   *
    * @param target The target {@link ExecutorService}.
    * @throws NullPointerException If {@code target} is null.
    */
@@ -86,7 +87,7 @@ public class TestExecutorService implements ExecutorService {
   }
 
   @Override
-  public <T>Future<T> submit(final Callable<T> task) {
+  public <T> Future<T> submit(final Callable<T> task) {
     return target.submit(() -> {
       threads.add(Thread.currentThread());
       return task.call();
@@ -94,7 +95,7 @@ public class TestExecutorService implements ExecutorService {
   }
 
   @Override
-  public <T>Future<T> submit(final Runnable task, final T result) {
+  public <T> Future<T> submit(final Runnable task, final T result) {
     return target.submit(() -> {
       threads.add(Thread.currentThread());
       task.run();
@@ -110,7 +111,7 @@ public class TestExecutorService implements ExecutorService {
   }
 
   @Override
-  public <T>List<Future<T>> invokeAll(final Collection<? extends Callable<T>> tasks) throws InterruptedException {
+  public <T> List<Future<T>> invokeAll(final Collection<? extends Callable<T>> tasks) throws InterruptedException {
     final ArrayList<Callable<T>> callables = new ArrayList<>(tasks);
     for (int i = 0, i$ = callables.size(); i < i$; ++i) { // [RA]
       final Callable<T> task = callables.get(i);
@@ -127,7 +128,7 @@ public class TestExecutorService implements ExecutorService {
   }
 
   @Override
-  public <T>List<Future<T>> invokeAll(final Collection<? extends Callable<T>> tasks, final long timeout, final TimeUnit unit) throws InterruptedException {
+  public <T> List<Future<T>> invokeAll(final Collection<? extends Callable<T>> tasks, final long timeout, final TimeUnit unit) throws InterruptedException {
     final ArrayList<Callable<T>> callables = new ArrayList<>(tasks);
     for (int i = 0, i$ = callables.size(); i < i$; ++i) { // [RA]
       final Callable<T> task = callables.get(i);
@@ -144,7 +145,7 @@ public class TestExecutorService implements ExecutorService {
   }
 
   @Override
-  public <T>T invokeAny(final Collection<? extends Callable<T>> tasks) throws InterruptedException, ExecutionException {
+  public <T> T invokeAny(final Collection<? extends Callable<T>> tasks) throws InterruptedException, ExecutionException {
     final ArrayList<Callable<T>> callables = new ArrayList<>(tasks);
     for (int i = 0, i$ = callables.size(); i < i$; ++i) { // [RA]
       final Callable<T> task = callables.get(i);
@@ -161,7 +162,7 @@ public class TestExecutorService implements ExecutorService {
   }
 
   @Override
-  public <T>T invokeAny(final Collection<? extends Callable<T>> tasks, final long timeout, final TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+  public <T> T invokeAny(final Collection<? extends Callable<T>> tasks, final long timeout, final TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
     final ArrayList<Callable<T>> callables = new ArrayList<>(tasks);
     for (int i = 0, i$ = callables.size(); i < i$; ++i) { // [RA]
       final Callable<T> task = callables.get(i);
