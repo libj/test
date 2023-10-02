@@ -47,7 +47,7 @@ public class SurefireTestLayout extends LayoutBase<ILoggingEvent> {
   @Override
   public String doLayout(final ILoggingEvent event) {
     final String message = event.getFormattedMessage();
-    final StringBuilder builder = new StringBuilder(TestAide.isInSurefireTest() ? TEST + (message.contains("\n") ? message.replace("\n", "\n" + TEST) : message) : event.getFormattedMessage());
+    final StringBuilder builder = new StringBuilder(TestAide.isInSurefireTest() ? TEST + (message.contains("\n") ? message.replace("\n", "\n" + TEST) : message != null ? message : "") : event.getFormattedMessage());
     builder.append(CoreConstants.LINE_SEPARATOR);
     if (event.getThrowableProxy() != null) {
       builder.append(converter.convert(event));
