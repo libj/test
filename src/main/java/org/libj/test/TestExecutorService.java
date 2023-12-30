@@ -16,7 +16,6 @@
 
 package org.libj.test;
 
-import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -36,15 +35,6 @@ import java.util.concurrent.TimeoutException;
 public class TestExecutorService implements ExecutorService {
   protected static final ConcurrentHashMap<Thread,Throwable> exception = new ConcurrentHashMap<>();
 
-  static {
-    Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-      @Override
-      public void uncaughtException(final Thread t, final Throwable e) {
-        exception.put(t, e);
-      }
-    });
-  }
-
   protected ExecutorService target;
   private final ArrayList<Thread> threads = new ArrayList<>();
 
@@ -62,7 +52,13 @@ public class TestExecutorService implements ExecutorService {
   public void execute(final Runnable command) {
     target.execute(() -> {
       threads.add(Thread.currentThread());
-      command.run();
+      try {
+        command.run();
+      }
+      catch (final Throwable t) {
+        exception.put(Thread.currentThread(), t);
+        throw t;
+      }
     });
   }
 
@@ -90,7 +86,13 @@ public class TestExecutorService implements ExecutorService {
   public <T> Future<T> submit(final Callable<T> task) {
     return target.submit(() -> {
       threads.add(Thread.currentThread());
-      return task.call();
+      try {
+        return task.call();
+      }
+      catch (final Throwable t) {
+        exception.put(Thread.currentThread(), t);
+        throw t;
+      }
     });
   }
 
@@ -98,7 +100,13 @@ public class TestExecutorService implements ExecutorService {
   public <T> Future<T> submit(final Runnable task, final T result) {
     return target.submit(() -> {
       threads.add(Thread.currentThread());
-      task.run();
+      try {
+        task.run();
+      }
+      catch (final Throwable t) {
+        exception.put(Thread.currentThread(), t);
+        throw t;
+      }
     }, result);
   }
 
@@ -106,7 +114,13 @@ public class TestExecutorService implements ExecutorService {
   public Future<?> submit(final Runnable task) {
     return target.submit(() -> {
       threads.add(Thread.currentThread());
-      task.run();
+      try {
+        task.run();
+      }
+      catch (final Throwable t) {
+        exception.put(Thread.currentThread(), t);
+        throw t;
+      }
     });
   }
 
@@ -119,7 +133,13 @@ public class TestExecutorService implements ExecutorService {
         @Override
         public T call() throws Exception {
           threads.add(Thread.currentThread());
-          return task.call();
+          try {
+            return task.call();
+          }
+          catch (final Throwable t) {
+            exception.put(Thread.currentThread(), t);
+            throw t;
+          }
         }
       });
     }
@@ -136,7 +156,13 @@ public class TestExecutorService implements ExecutorService {
         @Override
         public T call() throws Exception {
           threads.add(Thread.currentThread());
-          return task.call();
+          try {
+            return task.call();
+          }
+          catch (final Throwable t) {
+            exception.put(Thread.currentThread(), t);
+            throw t;
+          }
         }
       });
     }
@@ -153,7 +179,13 @@ public class TestExecutorService implements ExecutorService {
         @Override
         public T call() throws Exception {
           threads.add(Thread.currentThread());
-          return task.call();
+          try {
+            return task.call();
+          }
+          catch (final Throwable t) {
+            exception.put(Thread.currentThread(), t);
+            throw t;
+          }
         }
       });
     }
@@ -170,7 +202,13 @@ public class TestExecutorService implements ExecutorService {
         @Override
         public T call() throws Exception {
           threads.add(Thread.currentThread());
-          return task.call();
+          try {
+            return task.call();
+          }
+          catch (final Throwable t) {
+            exception.put(Thread.currentThread(), t);
+            throw t;
+          }
         }
       });
     }
