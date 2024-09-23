@@ -138,7 +138,7 @@ public final class TestAide {
    * <p>
    * This method differentiates itself from {@link Throwable#printStackTrace(PrintStream)} by terminating the printout of the
    * backtrace at the first occurrence (if any) of a stack trace element representing {@code "runReflectiveCall"} of a class in the
-   * {@code "org.junit.runners"} package.
+   * {@link "org.junit.runners"} package.
    *
    * @param out The {@code PrintStream} to use for output.
    * @param t The {@link Throwable} to print.
