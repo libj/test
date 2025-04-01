@@ -31,6 +31,24 @@ import java.util.Set;
  * Helpful utility functions for test executions.
  */
 public final class TestAide {
+  private static boolean inTestInited;
+  private static boolean inTest;
+
+  /**
+   * Returns {@code true} if the current execution scope is "test", otherwise {@code false}.
+   *
+   * @return {@code true} if the current execution scope is "test", otherwise {@code false}.
+   */
+  public static boolean isInTestScope() {
+    if (inTestInited)
+      return inTest;
+
+    final String classpath = System.getProperty("java.class.path");
+    inTest = classpath.contains("test-classes");
+    inTestInited = true;
+    return inTest;
+  }
+
   private static boolean inSurefireTestInited;
   private static boolean inSurefireTest;
 
